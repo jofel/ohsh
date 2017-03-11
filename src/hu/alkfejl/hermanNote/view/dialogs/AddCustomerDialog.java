@@ -24,7 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
- * Az oszt√°ly az √∫j √ºgyf√©l felv√©tel√©n√©l megjelen≈ë dial√≥gus.
+ * Az oszt·ly az ˙j ¸gyfÈl felvÈtelÈnÈl megjelenı dialÛgus.
  */
 public class AddCustomerDialog extends JDialog implements ActionListener {
 
@@ -32,8 +32,8 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
 
     private BookShopGUI gui;
 
-    // A dial√≥gus azon vez√©rl≈ëit melyekre sz√ºks√©g lesz az esem√©nykezel√©s sor√°n
-    // oszt√°lyv√°ltoz√≥k√©nt defini√°ljuk
+    // A dialÛgus azon vezÈrlıit melyekre sz¸ksÈg lesz az esemÈnykezelÈs sor·n
+    // oszt·lyv·ltozÛkÈnt defini·ljuk
     private JTextField nameTextfield = new JTextField(10);
     private JSpinner ageSpinner = new JSpinner();
     private JRadioButton femaleRadio = new JRadioButton(Labels.female);
@@ -47,66 +47,66 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
         super(gui.getWindow(), modal);
         this.gui = gui;
 
-        // A dial√≥gus c√≠m√©nek be√°ll√≠t√°sa
+        // A dialÛgus cÌmÈnek be·llÌt·sa
         this.setTitle(Labels.add_customer);
 
-        // A be√°ll√≠t√°sokat tartalmaz√≥ panel gy√°rt√°sa
+        // A be·llÌt·sokat tartalmazÛ panel gy·rt·sa
         JPanel settingPanel = createSettingPanel();
 
-        // A gombokat tartalmaz√≥ panel gy√°rt√°sa
+        // A gombokat tartalmazÛ panel gy·rt·sa
         JPanel buttonPanel = createButtonPanel();
 
-        // Az el≈ëz≈ë k√©t panelt egy panelre rakjuk
+        // Az elızı kÈt panelt egy panelre rakjuk
         JPanel dialogPanel = createDialogPanel(settingPanel, buttonPanel); 
 
-        // A dialogPanelt r√°rakjuk a dial√≥gusra
+        // A dialogPanelt r·rakjuk a dialÛgusra
         getContentPane().add(dialogPanel);
 
-        // A dial√≥gus megfelel≈ë m√©ret√©nek be√°ll√≠t√°sa (a tartalmazott elemek alapj√°n)
+        // A dialÛgus megfelelı mÈretÈnek be·llÌt·sa (a tartalmazott elemek alapj·n)
         pack();
 
-        // A dial√≥gust a BookShopGUI-hoz k√©pest rajzolja ki
+        // A dialÛgust a BookShopGUI-hoz kÈpest rajzolja ki
         setLocationRelativeTo(gui.getWindow());
 
-        // Dialogus megjelen√≠t√©se
+        // Dialogus megjelenÌtÈse
         setVisible(true);
     }
 
     private JPanel createSettingPanel() {
         JPanel settingPanel = new JPanel();
 
-        // A panel elrendez√©se m√°trix, 5 sor √©s 2 oszlop, a cell√°k egyforma m√©ret≈±ek
+        // A panel elrendezÈse m·trix, 5 sor Ès 2 oszlop, a cell·k egyforma mÈret˚ek
         settingPanel.setLayout(new GridLayout(5,2));
 
-        // Az els≈ë sorban egy n√©v c√≠mke √©s egy sz√∂vegmez≈ë lesz
+        // Az elsı sorban egy nÈv cÌmke Ès egy szˆvegmezı lesz
         settingPanel.add(new JLabel(Labels.name));
         settingPanel.add(this.nameTextfield);
 
-        // A m√°sodik sorban egy kor c√≠mke √©s egy spinner lesz
+        // A m·sodik sorban egy kor cÌmke Ès egy spinner lesz
         settingPanel.add(new JLabel(Labels.age));
         settingPanel.add(this.ageSpinner);
 
-        // A harmadik sorban egy nem c√≠mke √©s k√©t radiobutton lesz, amit egy
-        // √∫jabb panelen helyez√ºnk el (gender_panel)
-        // A gender_panelre jobbra z√°rtan egym√°s ut√°n pakolhatunk vez√©rl≈ëket
+        // A harmadik sorban egy nem cÌmke Ès kÈt radiobutton lesz, amit egy
+        // ˙jabb panelen helyez¸nk el (gender_panel)
+        // A gender_panelre jobbra z·rtan egym·s ut·n pakolhatunk vezÈrlıket
         settingPanel.add(new JLabel(Labels.gender));
         JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         genderPanel.add(femaleRadio);
         genderPanel.add(maleRadio);
 
-        // Alap√©rtelmez√©sben a female van bekapcsolva
+        // AlapÈrtelmezÈsben a female van bekapcsolva
         femaleRadio.setSelected(true);
 
-        // A female-male-b≈ël csak egy v√°laszthat√≥ ki ez√©rt egy ButtonGroupba rakjuk ≈ëket
+        // A female-male-bıl csak egy v·laszthatÛ ki ezÈrt egy ButtonGroupba rakjuk ıket
         ButtonGroup group = new ButtonGroup();
         group.add(femaleRadio);
         group.add(maleRadio);
 
-        // mivel a radio buttonnak alap√©rtelm√©zesben nagyobb a magass√°ga mint a
-        // textfieldnek ez√©rt √°t√©ll√≠tjuk az y koordin√°t√©kat akkor√°ra, mint a
-        // textfieldek eset√©ben
-        // ellenkez≈ë esetben a textfield-ek is ar√°nytalanul magasabbak lesznek
-        // mivel GridLayout-unk van, ahol minden cella egyforma m√©ret≈±
+        // mivel a radio buttonnak alapÈrtelmÈzesben nagyobb a magass·ga mint a
+        // textfieldnek ezÈrt ·tÈllÌtjuk az y koordin·tÈkat akkor·ra, mint a
+        // textfieldek esetÈben
+        // ellenkezı esetben a textfield-ek is ar·nytalanul magasabbak lesznek
+        // mivel GridLayout-unk van, ahol minden cella egyforma mÈret˚
         maleRadio.setPreferredSize(new Dimension(
                 maleRadio.getPreferredSize().width,
                 nameTextfield.getPreferredSize().height));
@@ -115,11 +115,11 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
                 nameTextfield.getPreferredSize().height));
         settingPanel.add(genderPanel);
 
-        // A 4. sorban lesz a kedvezm√©nyezetts√©g
+        // A 4. sorban lesz a kedvezmÈnyezettsÈg
         settingPanel.add(new JLabel(Labels.grantee));
         settingPanel.add(granteeCheck);
 
-        // A 5. sorban lesz a v√©gzetts√©g
+        // A 5. sorban lesz a vÈgzettsÈg
         settingPanel.add(new JLabel(Labels.qualification));
         settingPanel.add(qualificationCombo);
 
@@ -129,14 +129,14 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
 
-        // A panel elrendez√©se folytonos, k√∂z√©pre igaz√≠tva
+        // A panel elrendezÈse folytonos, kˆzÈpre igazÌtva
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        // Hozz√°adjuk az ok gombot, √©s figyel√ºnk r√°
+        // Hozz·adjuk az ok gombot, Ès figyel¸nk r·
         buttonPanel.add(okButton);
         okButton.addActionListener(this);
 
-        // Hozz√°adjuk a cancel gombot, √©s figyel√ºnk r√°
+        // Hozz·adjuk a cancel gombot, Ès figyel¸nk r·
         buttonPanel.add(cancelButton);
         cancelButton.addActionListener(this);
 
@@ -146,10 +146,10 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
     private JPanel createDialogPanel(JPanel settingPanel, JPanel buttonPanel) {
         JPanel dialogPanel = new JPanel();
 
-        // A panel elrendez√©se BorderLayout
+        // A panel elrendezÈse BorderLayout
         dialogPanel.setLayout(new BorderLayout());
 
-        // K√∂z√©pen lesz a settingPanel
+        // KˆzÈpen lesz a settingPanel
         dialogPanel.add(settingPanel, BorderLayout.CENTER);
 
         // Alul pedig a gombok
@@ -160,11 +160,11 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (okButton == e.getSource()) {
-            // Ha az OK gombot nyomt√°k meg, akkor megpr√≥b√°ljuk felvenni az
-            // √ºgyfelet
+            // Ha az OK gombot nyomt·k meg, akkor megprÛb·ljuk felvenni az
+            // ¸gyfelet
 
             if (nameTextfield.getText().isEmpty()) {
-                // Ha nem adtak meg nevet, akkor egy hiba√ºzenetet √≠runk ki egy
+                // Ha nem adtak meg nevet, akkor egy hiba¸zenetet Ìrunk ki egy
                 // error dialogra (JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(
                         gui.getWindow(),
@@ -174,7 +174,7 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
                 return;
             }
 
-            // l√©trehozzuk a customert
+            // lÈtrehozzuk a customert
             Customer customer = new Customer();
 
             customer.setName(nameTextfield.getText());
@@ -184,19 +184,19 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
             customer.setQualification(qualificationCombo.getSelectedItem().toString());
 
             if (!gui.getController().addCustomer(customer)) {
-                // Ha az addCustomer false-t ad vissza akkor egy hiba√ºzenetet
-                // √≠runk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
+                // Ha az addCustomer false-t ad vissza akkor egy hiba¸zenetet
+                // Ìrunk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(
                         gui.getWindow(),
                         Labels.customer_exists,
                         Labels.error,
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                // Ha az addCustomer true-t ad vissza akkor bez√°rjuk a dial√≥gust
+                // Ha az addCustomer true-t ad vissza akkor bez·rjuk a dialÛgust
                 setVisible(false);
             }
         } else if (cancelButton == e.getSource()) {
-            // cancel eset√©n egyszer≈±en bez√°rjuk az ablakot
+            // cancel esetÈn egyszer˚en bez·rjuk az ablakot
             setVisible(false);
         }
     }

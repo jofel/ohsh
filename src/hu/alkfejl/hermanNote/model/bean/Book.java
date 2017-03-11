@@ -1,7 +1,7 @@
 package hu.alkfejl.hermanNote.model.bean;
 
 /**
- * Az osztÃ¡ly egy kÃ¶nyvet Ã­r le a JavaBean konvenciÃ³k betartÃ¡sÃ¡val:
+ * Az osztály egy könyvet ír le a JavaBean konvenciók betartásával:
  */
 public class Book {
     private int id;

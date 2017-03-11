@@ -8,25 +8,25 @@ import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.view.Labels;
 
 /**
- * Az osztÃ¡ly az alkalmazÃ¡s belÃ©pÃ©si pontja, az alkalmazÃ¡s indÃ­tÃ¡sÃ¡Ã©rt felel...
+ * Az osztály az alkalmazás belépési pontja, az alkalmazás indításáért felel.
  */
 public class Main {
 
     /**
-     * A parancssorban fogadott felhasznÃ¡lÃ³nÃ©v.
+     * A parancssorban fogadott felhasználónév.
      * <p>
-     * Az egyszerÅ±sÃ©g vÃ©gett itt tÃ¡roljuk, lehetne szebben is, mert Ã­gy a view
-     * rÃ©teg hivatkozik a {@link Main}-re, a view-t nem lehet kiszedni az appbÃ³l
-     * Ã©s mÃ¡shol felhasznÃ¡lni.
-     * MegoldÃ¡s: kÃ¼lÃ¶n osztÃ¡ly a feldolgozott argumentumoknak, Ã¡tadni a view-nak.
+     * Az egyszerûség végett itt tároljuk, lehetne szebben is, mert így a view
+     * réteg hivatkozik a {@link Main}-re, a view-t nem lehet kiszedni az appból
+     * és máshol felhasználni.
+     * Megoldás: külön osztály a feldolgozott argumentumoknak, átadni a view-nak.
      * </p>
      */
     public static String username;
 
     /**
-     * Az alkalmazÃ¡s belÃ©pÃ©si pontja.
+     * Az alkalmazás belépési pontja.
      *
-     * @param args A parancssori argumentumok listÃ¡ja.
+     * @param args A parancssori argumentumok listája.
      */
     public static void main(String[] args) {
         processCommandLine(args);
@@ -39,73 +39,73 @@ public class Main {
      * @param args
      */
     private static void processCommandLine(String[] args) {
-        // "buta" feldolgozÃ¡s: ha van paramÃ©ter, akkor az elsÅ‘ a usernÃ©v
+        // "buta" feldolgozás: ha van paraméter, akkor az elsõ a usernév
         if (args.length > 0) {
             username = args[0];
         }
     }
 
     /**
-     * IndÃ­tja az alkalmazÃ¡st.
+     * Indítja az alkalmazást.
      */
     private static void startApp() {
         BookShopController controller = new BookShopController();
        
-        //pÃ©ldaadatok felvÃ©telÃ©t mellÅ‘zzÃ¼k
+        //példaadatok felvételét mellõzzük
         //ensureSampleDataCreated(controller);
 
         controller.startDesktop();
     }
 
     /**
-     * BiztosÃ­tja a pÃ©ldaadatok lÃ©trejÃ¶ttÃ©t, amennyiben szÃ¼ksÃ©ges.
+     * Biztosítja a példaadatok létrejöttét, amennyiben szükséges.
      *
-     * @param controller Az alkalmazÃ¡s controllere.
+     * @param controller Az alkalmazás controllere.
      */
     private static void ensureSampleDataCreated(BookShopController controller) {
-        // ElkÃ©rjÃ¼k a mÃ¡r eltÃ¡rolt kÃ¶nyveket.
+        // Elkérjük a már eltárolt könyveket.
         List<Book> storedBooks = controller.getBooks();
 
-        // EllenÅ‘rizzÃ¼k, hogy van-e eltÃ¡rolt kÃ¶nyv.
+        // Ellenõrizzük, hogy van-e eltárolt könyv.
         boolean isAnyBookStored = storedBooks.size() != 0;
 
-        // Amennyiben nincs eltÃ¡rolt kÃ¶nyv, Ãºgy lÃ©trehozzuk a kÃ¶nyv
-        // pÃ©ldaadatokat.
+        // Amennyiben nincs eltárolt könyv, úgy létrehozzuk a könyv
+        // példaadatokat.
         if (!isAnyBookStored) {
             prepareBookSampleData(controller);
         }
 
-        // ElkÃ©rjÃ¼k a mÃ¡r eltÃ¡rolt vÃ¡sÃ¡rlÃ³kat.
+        // Elkérjük a már eltárolt vásárlókat.
         List<Customer> storedCustomers = controller.getCustomers();
 
-        // EllenÅ‘rizzÃ¼k, hogy van-e eltÃ¡rolt vÃ¡sÃ¡rlÃ³.
+        // Ellenõrizzük, hogy van-e eltárolt vásárló.
         boolean isAnyCustomerStored = storedCustomers.size() != 0;
 
-        // Amennyiben nincs eltÃ¡rolt vÃ¡sÃ¡rlÃ³, Ãºgy lÃ©trehozzuk a vÃ¡sÃ¡rlÃ³
-        // pÃ©ldaadatokat.
+        // Amennyiben nincs eltárolt vásárló, úgy létrehozzuk a vásárló
+        // példaadatokat.
         if (!isAnyCustomerStored) {
             prepareCustomerSampleData(controller);
         }
     }
 
     /**
-     * KÃ¶nyv pÃ©ldaadatokat vesz fel az alkalmazÃ¡sba, amennyiben nincsenek mÃ©g
-     * eltÃ¡rolt kÃ¶nyvek.
+     * Könyv példaadatokat vesz fel az alkalmazásba, amennyiben nincsenek még
+     * eltárolt könyvek.
      * <p>
-     * Fontos, a pÃ©lda adatok felvÃ©tele is az Ã¼zleti szabÃ¡lyok alkalmazÃ¡sÃ¡Ã©rt
-     * felelÅ‘s controlleren keresztÃ¼l tÃ¶rtÃ©nik!
+     * Fontos, a példa adatok felvétele is az üzleti szabályok alkalmazásáért
+     * felelõs controlleren keresztül történik!
      * </p>
      *
-     * @param controller Az alkalmazÃ¡s controllere.
+     * @param controller Az alkalmazás controllere.
      */
     private static void prepareBookSampleData(BookShopController controller) {
         for (int i = 0; i < 10; i++) {
             Book book = new Book();
 
-            // Ez itt nem UI cÃ­mke, hanem adat, mintha a user Ã­rta volna be,
-            // ezÃ©rt nem tesszÃ¼k Labels-be.
-            book.setTitle("CÃ­m " + i);
-            book.setAuthor("SzerzÅ‘" + i);
+            // Ez itt nem UI címke, hanem adat, mintha a user írta volna be,
+            // ezért nem tesszük Labels-be.
+            book.setTitle("Cím " + i);
+            book.setAuthor("Szerzõ" + i);
             book.setCategory(Labels.drama);
             book.setPiece(i);
             book.setPrice(i);
@@ -116,22 +116,22 @@ public class Main {
     }
 
     /**
-     * VÃ¡sÃ¡rlÃ³ pÃ©ldaadatokat vesz fel az alkalmazÃ¡sba, amennyiben nincsenek mÃ©g
-     * eltÃ¡rolt vÃ¡sÃ¡rlÃ³k.
+     * Vásárló példaadatokat vesz fel az alkalmazásba, amennyiben nincsenek még
+     * eltárolt vásárlók.
      * <p>
-     * Fontos, a pÃ©lda adatok felvÃ©tele is az Ã¼zleti szabÃ¡lyok alkalmazÃ¡sÃ¡Ã©rt
-     * felelÅ‘s controlleren keresztÃ¼l tÃ¶rtÃ©nik!
+     * Fontos, a példa adatok felvétele is az üzleti szabályok alkalmazásáért
+     * felelõs controlleren keresztül történik!
      * </p>
      *
-     * @param controller Az alkalmazÃ¡s controllere.
+     * @param controller Az alkalmazás controllere.
      */
     private static void prepareCustomerSampleData(BookShopController controller) {
         for (int i = 0; i < 10; i++) {
             Customer customer = new Customer();
 
-            // Ez itt nem UI cÃ­mke, hanem adat, mintha a user Ã­rta volna be,
-            // ezÃ©rt nem tesszÃ¼k Labels-be.
-            customer.setName("NÃ©v " + i);
+            // Ez itt nem UI címke, hanem adat, mintha a user írta volna be,
+            // ezért nem tesszük Labels-be.
+            customer.setName("Név " + i);
             customer.setAge(i);
             customer.setFemale(true);
             customer.setGrantee(true);

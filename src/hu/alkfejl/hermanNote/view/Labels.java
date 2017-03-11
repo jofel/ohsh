@@ -1,13 +1,13 @@
 package hu.alkfejl.hermanNote.view;
 
 /**
- * Ez az osztÃ¡ly tartalmazza a programban elÅ‘fordulÃ³ {@link String} konstansokat.
- * Csak itt fordulhat elÅ‘ {@link String} konstans!
+ * Ez az osztály tartalmazza a programban elõforduló {@link String} konstansokat.
+ * Csak itt fordulhat elõ {@link String} konstans!
  * <p>
- * ÃltalÃ¡nossÃ¡gban elfogadott Ã©s szokÃ¡s, hogy a kÃ³d nem tartalmaz olyan
- * {@link String} konstansokat, melyek a felhasznÃ¡lÃ³i felÃ¼leten jelennek meg.
- * Ezeket mindig egy kÃ¶zÃ¶s helyre gyÅ±jtjÃ¼k, Ã­gy kÃ©sÅ‘bb lokalizÃ¡lhatÃ³ az alkalmazÃ¡s
- * Ã©s eleve Ã¡tlÃ¡thatÃ³bb Ã­gy.
+ * Általánosságban elfogadott és szokás, hogy a kód nem tartalmaz olyan
+ * {@link String} konstansokat, melyek a felhasználói felületen jelennek meg.
+ * Ezeket mindig egy közös helyre gyûjtjük, így késõbb lokalizálható az alkalmazás
+ * és eleve átláthatóbb így.
  * </p>
  */
 public class Labels {
@@ -74,7 +74,7 @@ public class Labels {
     public final static String piece = "Piece";
     public final static String sci_fi = "sci-fi";
     public final static String horror = "horror";
-    public final static String drama = "DrÃ¡ma";
+    public final static String drama = "Dráma";
     public final static String[] categories = new String[] {
         Labels.sci_fi,
         Labels.horror,
@@ -89,7 +89,7 @@ public class Labels {
     public final static String sell_book = "Sell book";
     public final static String list_sold_books = "List sold books";
     public final static String purchase_choose_book_and_customer =
-            "VÃ¡lassz ki kÃ¶nyvet Ã©s vÃ¡sÃ¡rlÃ³t!";
+            "Válassz ki könyvet és vásárlót!";
     public final static String purchase_failed =
-            "Nem sikerÃ¼lt rÃ¶gzÃ­teni a vÃ¡sÃ¡rlÃ¡st!";
+            "Nem sikerült rögzíteni a vásárlást!";
 }

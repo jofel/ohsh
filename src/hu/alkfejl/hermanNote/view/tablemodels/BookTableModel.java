@@ -8,13 +8,13 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * Egyedi table modelt az AbstractTableModelb≈ël tudunk sz√°rmaztatni.
+ * Egyedi table modelt az AbstractTableModelbıl tudunk sz·rmaztatni.
  */
 public class BookTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 2093252961204461838L;
 
-    // Az egyes oszlop fejl√©cek nevei
+    // Az egyes oszlop fejlÈcek nevei
     private String[] columnNames = new String[] {
             Labels.author, Labels.title, Labels.year, Labels.category,
             Labels.price, Labels.piece, Labels.ancient };
@@ -27,11 +27,11 @@ public class BookTableModel extends AbstractTableModel {
         this.books = books;
     }
 
-    /* A table model megval√≥s√≠t√°s√°hoz fel√ºl kell √≠rni n√©h√°ny fontos met√≥dust!
+    /* A table model megvalÛsÌt·s·hoz fel¸l kell Ìrni nÈh·ny fontos metÛdust!
      */
 
     /**
-     * Megadja, hogy h√°ny oszlopa van a t√°bl√°zatnak.
+     * Megadja, hogy h·ny oszlopa van a t·bl·zatnak.
      */
     @Override
     public int getColumnCount() {
@@ -39,7 +39,7 @@ public class BookTableModel extends AbstractTableModel {
     }
 
     /**
-     * Megadja, hogy h√°ny sora van a t√°bl√°zatnak.
+     * Megadja, hogy h·ny sora van a t·bl·zatnak.
      */
     @Override
     public int getRowCount() {
@@ -55,7 +55,7 @@ public class BookTableModel extends AbstractTableModel {
     }
 
     /**
-     * Megadja, hogy adott sorban √©s oszlopban milyen √©rt√©k szerepel.
+     * Megadja, hogy adott sorban Ès oszlopban milyen ÈrtÈk szerepel.
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -82,15 +82,15 @@ public class BookTableModel extends AbstractTableModel {
     }
 
     // Nagyon fontos! Eredetileg egy JTable-ben minden sztring
-    // √çgy viszont ami boolean, az checkboxkent jelenik meg.
+    // Õgy viszont ami boolean, az checkboxkent jelenik meg.
     @Override
     public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
 
-    // Nagyon fontos! Eredetileg egy JTable minden mez≈ëje szerkeszthet≈ë
-    // Jelenleg ezt letiltjuk, a szerkeszt√©shez a kontrolleren kereszt√ºl az
-    // adatb√°zis kommunik√°ci√≥t is implementalni kell!
+    // Nagyon fontos! Eredetileg egy JTable minden mezıje szerkeszthetı
+    // Jelenleg ezt letiltjuk, a szerkesztÈshez a kontrolleren kereszt¸l az
+    // adatb·zis kommunik·ciÛt is implementalni kell!
     @Override
     public boolean isCellEditable(int row, int col) {
         return false;

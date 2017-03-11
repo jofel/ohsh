@@ -11,45 +11,45 @@ import hu.alkfejl.hermanNote.model.bean.User;
 import hu.alkfejl.hermanNote.view.BookShopGUI;
 
 /**
- * Ez az osztÃ¡ly vezÃ©rli az egÃ©sz programot, valamint a view Ã©s model csomagokat
- * kÃ¶ti Ã¶ssze. Itt talÃ¡lhatÃ³ az Ã¼zleti logika (business logic) is.
+ * Ez az osztály vezérli az egész programot, valamint a view és model csomagokat
+ * köti össze. Itt található az üzleti logika (business logic) is.
  */
 public class BookShopController {
 
-    // Data Access Object - az adat elÃ©rÃ©sÃ©t szolgÃ¡lÃ³ objektum
-    // FONTOS!!! A BookShopDAO az adatelÃ©rÃ©si rÃ©teg interfÃ©sze (absztraktciÃ³ja)
-    // a rÃ©teget mindig az interfÃ©szen keresztÃ¼l Ã©rjÃ¼k el.
-    // A rÃ©teg implementÃ¡ciÃ³jÃ¡t egyszer hasznÃ¡ljuk, pÃ©ldÃ¡nyosÃ­tÃ¡skor,
+    // Data Access Object - az adat elérését szolgáló objektum
+    // FONTOS!!! A BookShopDAO az adatelérési réteg interfésze (absztraktciója)
+    // a réteget mindig az interfészen keresztül érjük el.
+    // A réteg implementációját egyszer használjuk, példányosításkor,
     // visszacastolni TILOS!!!
     private BookShopDAO dao = new BookShopDAOOracle();
 
     /**
-     * ElindÃ­tja az alkalmazÃ¡s desktopra specializÃ¡lt user interface-Ã©t.
+     * Elindítja az alkalmazás desktopra specializált user interface-ét.
      */
     public void startDesktop() {
         BookShopGUI vc = new BookShopGUI(this);
 
-        // GUI felÃ¼let elindÃ­tÃ¡sa
+        // GUI felület elindítása
         vc.startGUI();
     }
     public boolean addUser(User u) {
-		// Controller, business logic-ra (Ã¼zleti logika, szabÃ¡lyok) pÃ©lda
-        // SzabÃ¡ly: valaki akkor hallgatÃ³ ha 14-nÃ©l fiatalabb, valaki akkor
-        // nyugdÃ­jas ha 62-nel idÅ‘sebb
+		// Controller, business logic-ra (üzleti logika, szabályok) példa
+        // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor
+        // nyugdíjas ha 62-nel idõsebb
         
         return dao.addUser(u);
 	}
     
     public List<User> getUsers() {
-        // A customer listÃ¡zÃ¡snÃ¡l nincs Ã¼zleti szabÃ¡ly, ezÃ©rt csak visszaadjuk a
-        // model-tÅ‘l kapott listÃ¡t.
+        // A customer listázásnál nincs üzleti szabály, ezért csak visszaadjuk a
+        // model-tõl kapott listát.
         return dao.getUsers();
     }
     
     public boolean addCustomer(Customer c) {
-        // Controller, business logic-ra (Ã¼zleti logika, szabÃ¡lyok) pÃ©lda
-        // SzabÃ¡ly: valaki akkor hallgatÃ³ ha 14-nÃ©l fiatalabb, valaki akkor
-        // nyugdÃ­jas ha 62-nel idÅ‘sebb
+        // Controller, business logic-ra (üzleti logika, szabályok) példa
+        // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor
+        // nyugdíjas ha 62-nel idõsebb
         if (c.getAge() < 14) {
             c.setStudent(true);
         } else if(c.getAge() > 62) {
@@ -60,8 +60,8 @@ public class BookShopController {
     }
 
     public List<Customer> getCustomers() {
-        // A customer listÃ¡zÃ¡snÃ¡l nincs Ã¼zleti szabÃ¡ly, ezÃ©rt csak visszaadjuk a
-        // model-tÅ‘l kapott listÃ¡t.
+        // A customer listázásnál nincs üzleti szabály, ezért csak visszaadjuk a
+        // model-tõl kapott listát.
         return dao.getCustomers();
     }
 
