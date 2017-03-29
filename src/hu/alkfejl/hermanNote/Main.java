@@ -28,7 +28,7 @@ public class Main {
      *
      * @param args A parancssori argumentumok listája.
      */
-    //változtatás
+    
     public static void main(String[] args) {
         processCommandLine(args);
         startApp();
