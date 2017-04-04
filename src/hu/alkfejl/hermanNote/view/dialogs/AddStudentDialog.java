@@ -12,16 +12,17 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.BookShopGUI;
 import hu.alkfejl.hermanNote.view.Labels;
 
 /**
  * Az osztály az új ügyfél felvételénél megjelenõ dialógus.
  */
-public class AddUserDialog extends JDialog implements ActionListener {
+public class AddStudentDialog extends JDialog implements ActionListener {
 
 
     private static final long serialVersionUID = 3382073646421158018L;
@@ -30,20 +31,21 @@ public class AddUserDialog extends JDialog implements ActionListener {
 
     // A dialógus azon vezérlõit melyekre szükség lesz az eseménykezelés során
     // osztályváltozóként definiáljuk
-    private JTextField nameTextfield = new JTextField(10);
     private JTextField ehaTextfield = new JTextField(10);
-    private JTextField roomTextfield = new JTextField(10);
+    private JTextField nameTextfield = new JTextField(10);
+    private JSpinner pointSpinner = new JSpinner();
     private JCheckBox kbCheck = new JCheckBox();
     private JCheckBox adminCheck = new JCheckBox();
+    private JCheckBox userCheck = new JCheckBox();
     private JButton okButton = new JButton(Labels.ok);
     private JButton cancelButton = new JButton(Labels.cancel);
 
-    public AddUserDialog(BookShopGUI gui, boolean modal) {
+    public AddStudentDialog(BookShopGUI gui, boolean modal) {
         super(gui.getWindow(), modal);
         this.gui = gui;
 
         // A dialógus címének beállítása
-        this.setTitle(Labels.add_user);
+        this.setTitle(Labels.add_student);
 
         // A beállításokat tartalmazó panel gyártása
         JPanel settingPanel = createSettingPanel();
@@ -71,27 +73,31 @@ public class AddUserDialog extends JDialog implements ActionListener {
         JPanel settingPanel = new JPanel();
 
         // A panel elrendezése mátrix, 5 sor és 2 oszlop, a cellák egyforma méretûek
-        settingPanel.setLayout(new GridLayout(5,2));
+        settingPanel.setLayout(new GridLayout(6,2));
 
-        // Az 1. sorban egy név címke és egy szövegmezõ lesz
-        settingPanel.add(new JLabel(Labels.user_name));
-        settingPanel.add(this.nameTextfield);
-
-        // A 2. sorban egy kor címke és egy spinner lesz
-        settingPanel.add(new JLabel(Labels.user_eha));
+        // Az 1. sorban egy kor címke és egy spinner lesz
+        settingPanel.add(new JLabel(Labels.student_eha));
         settingPanel.add(this.ehaTextfield);
         
-     // A 2. sorban egy kor címke és egy spinner lesz
-        settingPanel.add(new JLabel(Labels.user_room));
-        settingPanel.add(this.roomTextfield);
+        // A 2. sorban egy név címke és egy szövegmezõ lesz
+        settingPanel.add(new JLabel(Labels.student_name));
+        settingPanel.add(this.nameTextfield);
+
+        // A 3. sorban egy kor címke és egy spinner lesz
+        settingPanel.add(new JLabel(Labels.student_point));
+        settingPanel.add(this.pointSpinner);
 
         // A 4. sorban lesz a kedvezményezettség
-        settingPanel.add(new JLabel(Labels.user_kb));
+        settingPanel.add(new JLabel(Labels.student_kb));
         settingPanel.add(kbCheck);
 
         // A 5. sorban lesz a végzettség
-        settingPanel.add(new JLabel(Labels.user_admin));
+        settingPanel.add(new JLabel(Labels.student_admin));
         settingPanel.add(adminCheck);
+        
+     	// A 6. sorban lesz a végzettség
+        settingPanel.add(new JLabel(Labels.student_user));
+        settingPanel.add(userCheck);
 
         return settingPanel;
     }
@@ -145,15 +151,16 @@ public class AddUserDialog extends JDialog implements ActionListener {
             }
 
             // létrehozzuk a customert
-            User user = new User();
+            Student student = new Student();
+            
+            student.setEha(ehaTextfield.getText());
+            student.setName(nameTextfield.getText());
+            student.setPoint((Integer)pointSpinner.getValue());
+            student.setKb(kbCheck.isSelected());
+            student.setAdmin(adminCheck.isSelected());
+            student.setUser(userCheck.isSelected());
 
-            user.setName(nameTextfield.getText());
-            user.setEha(ehaTextfield.getText());
-            user.setRoom(Integer.parseInt(roomTextfield.getText()));
-            user.setKb(kbCheck.isSelected());
-            user.setAdmin(kbCheck.isSelected());
-
-            if (!gui.getController().addUser(user)) {
+            if (!gui.getController().addStudent(student)) {
                 // Ha az addCustomer false-t ad vissza akkor egy hibaüzenetet
                 // írunk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(

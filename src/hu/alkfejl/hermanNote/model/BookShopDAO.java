@@ -5,7 +5,7 @@ import java.util.List;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.model.bean.Purchase;
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 
 /**
  * Az interfész a BookShop app adatelérési retegét reprezentálja.
@@ -19,14 +19,14 @@ public interface BookShopDAO {
      * @param user A tárolandó {@link Customer}.
      * @return Igaz, ha sikeresen tárolva, hamis, egyébként.
      */
-	public boolean addUser(User u);
+	public boolean addStudent(Student s);
 	
 	 /**
      * Visszaadja a tárolt {@link User} példányokat.
      *
      * @return A tárolt {@link User}-ek listája.
      */
-    public List<User> getUsers();
+    public List<Student> getStudents();
     
     /**
      * Hozzáad egy {@link Customer}-t az adattárhoz.

@@ -11,12 +11,12 @@ import java.util.List;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.model.bean.Purchase;
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class BookShopDAOOracle implements BookShopDAO {
 	
-	List<User> users = new ArrayList<User>();
+	List<Student> students = new ArrayList<Student>();
 	  
 	public BookShopDAOOracle(){
 		 try {
@@ -33,21 +33,20 @@ public class BookShopDAOOracle implements BookShopDAO {
 			  ex.printStackTrace();
 		  }
 	}
-	private static final String SQL_ADD_USER =
-	        "INSERT INTO users " +
-	        "(name, eha, room, kb, admin)" +
-	        "VALUES (?, ?, ?, ?, ?)";
+	private static final String SQL_ADD_STUDENT =
+	        "INSERT INTO hallgato " +
+	        "(eha, nev, pont, kb, admin, felhasznalo)" +
+	        "VALUES (?, ?, ?, ?, ?, ?)";
 	
-	private static final String SQL_LIST_USERS = "SELECT * FROM users";
+	private static final String SQL_LIST_STUDENTS = "SELECT * FROM hallgato";
 	
-	@Override
-	public boolean addUser(User user) {
+	public boolean addStudent(Student student) {
 		boolean rvSucceeded = false;
 		
 		Connection conn = null;
         PreparedStatement pst = null;
         
-		if (!checkUserNameUnique(user)) {
+		if (!checkUserNameUnique(student)) {
             return false;
         }
 		
@@ -62,18 +61,20 @@ public class BookShopDAOOracle implements BookShopDAO {
 			
 			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
             // paraméterezhetõ) utasítást
-			pst = conn.prepareStatement(SQL_ADD_USER);
+			pst = conn.prepareStatement(SQL_ADD_STUDENT);
 			
 			// Az egyes parametéreket sorban kell megadni, pozíció alapján, ami
             // 1-tõl indul
             // Célszerû egy indexet inkrementálni, mivel ha az egyik paraméter
             // kiesik, akkor nem kell az utána következõeket újra számozni...
             int index = 1;
-            pst.setString(index++, user.getName());
-            pst.setString(index++, user.getEha());
-            pst.setInt(index++, user.getRoom());
-            pst.setInt(index++, user.isKb() ? 1 : 0);
-            pst.setInt(index++, user.isAdmin() ? 1 : 0);
+            pst.setString(index++, student.getEha());
+            pst.setString(index++, student.getName());
+            pst.setInt(index++, student.getPoint());
+            pst.setInt(index++, student.isKb() ? 1 : 0);
+            System.out.println("Student kollbizes?"+ student.isKb());
+            pst.setInt(index++, student.isAdmin() ? 1 : 0);
+            pst.setInt(index++, student.isUser() ? 1 : 0);
             
             // Az ExecuteUpdate paranccsal végrehajtjuk az utasítást
             // Az executeUpdate visszaadja, hogy hány sort érintett az SQL ha 
@@ -127,13 +128,13 @@ public class BookShopDAOOracle implements BookShopDAO {
      *
      * @return A tárolt {@link Customer}-ek listája.
      */
-	public List<User> getUsers() {
+	public List<Student> getStudents() {
 		Connection conn = null;
 	    Statement st = null;
 	    
 	    // Töröljük a memóriából a usereket (azért tartjuk bennt, mert
         // lehetnek késõbb olyan mûveletek, melyekhez nem kell frissíteni)
-	    users.clear();
+	    students.clear();
 	    
 		try {
 			// Az adatbázis kapcsolatunkat a OracleDataSource segítségével hozzuk létre
@@ -150,22 +151,24 @@ public class BookShopDAOOracle implements BookShopDAO {
 			
 			// Az utasítás objektumon keresztül indítunk egy query-t
             // Az eredményeket egy ResultSet objektumban kapjuk vissza
-			ResultSet rs = st.executeQuery( SQL_LIST_USERS );
-			System.out.println( SQL_LIST_USERS );
+			ResultSet rs = st.executeQuery( SQL_LIST_STUDENTS );
+			System.out.println( SQL_LIST_STUDENTS );
 			
 			// Bejárjuk a visszakapott ResultSet-et (ami a usereket tartalmazza)
 			while (rs.next()) {
 				// új Usert hozunk létre
-				User user = new User();
+				Student student = new Student();
 				
 				// A user nevét a ResultSet aktuális sorából olvassuk (name column)
-                user.setName(rs.getString("name"));
-                user.setEha(rs.getString("eha"));
-                user.setRoom(Integer.parseInt(rs.getString("room")));
-                user.setKb(rs.getInt("kb")==1?true:false);
-                user.setAdmin(rs.getInt("admin")==1?true:false);
+				
+                student.setEha(rs.getString("eha"));
+                student.setName(rs.getString("nev"));
+                student.setPoint(Integer.parseInt(rs.getString("pont")));
+                student.setKb(rs.getInt("kb")==1?true:false);
+                student.setAdmin(rs.getInt("admin")==1?true:false);
+                student.setUser(rs.getInt("felhasznalo")==1?true:false);
                 
-                users.add(user);
+                students.add(student);
                 
 			}
 		}catch ( SQLException ex ) {
@@ -191,7 +194,7 @@ public class BookShopDAOOracle implements BookShopDAO {
             }
         }
 		
-		return users;
+		return students;
 	}
 	
 	/**
@@ -201,11 +204,11 @@ public class BookShopDAOOracle implements BookShopDAO {
      * @param newCustomer Az újonnan felveendõ {@link Customer}.
      * @return True, ha a név egyedi, false egyébként.
      */
-    private boolean checkUserNameUnique(User newUser) {
+    private boolean checkUserNameUnique(Student newStudent) {
         boolean rvIsValid = true;
 
-        for (User user : users) {
-            if (user.getName().equals(newUser.getName())) {
+        for (Student student : students) {
+            if (student.getEha().equals(newStudent.getEha())) {
                 rvIsValid = false;
                 break;
             }
@@ -249,6 +252,10 @@ public class BookShopDAOOracle implements BookShopDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+
+	
 	
 	
 

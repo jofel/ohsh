@@ -13,15 +13,15 @@ import javax.swing.JTable;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.model.bean.Purchase;
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.dialogs.AddCustomerDialog;
-import hu.alkfejl.hermanNote.view.dialogs.AddUserDialog;
+import hu.alkfejl.hermanNote.view.dialogs.AddStudentDialog;
 import hu.alkfejl.hermanNote.view.dialogs.BuyBookDialog;
 import hu.alkfejl.hermanNote.view.dialogs.SellBookDialog;
 import hu.alkfejl.hermanNote.view.tablemodels.BookTableModel;
 import hu.alkfejl.hermanNote.view.tablemodels.CustomerTableModel;
 import hu.alkfejl.hermanNote.view.tablemodels.PurchaseTableModel;
-import hu.alkfejl.hermanNote.view.tablemodels.UserTableModel;
+import hu.alkfejl.hermanNote.view.tablemodels.StudentTableModel;
 
 /**
  * A {@link BookShopMenuBar} osztály reprezentálja a menüt.
@@ -42,7 +42,7 @@ public class BookShopMenuBar extends JMenuBar implements ActionListener {
         this.gui = gui;
 
         // Három menüpontot gyártunk általánosan, a createMenuPoint metódussal
-        createMenuPoint(Labels.user, Labels.add_user, Labels.list_users);
+        createMenuPoint(Labels.students, Labels.add_student, Labels.list_students);
         //createMenuPoint(Labels.customer, Labels.add_customer, Labels.list_customers);
         //createMenuPoint(Labels.book, Labels.buy_book, Labels.list_books);
         //createMenuPoint(Labels.sell, Labels.sell_book, Labels.list_sold_books);
@@ -79,14 +79,14 @@ public class BookShopMenuBar extends JMenuBar implements ActionListener {
         String actionCommand = e.getActionCommand();
 
         System.out.println("A következõ menüt meghívta a felhasználó:" + actionCommand);
-        if (actionCommand.equals(Labels.add_user)){
-        	new AddUserDialog(gui, true);
-        } else if (actionCommand.equals(Labels.list_users)){
-        	List<User> users = gui.getController().getUsers();
+        if (actionCommand.equals(Labels.add_student)){
+        	new AddStudentDialog(gui, true);
+        } else if (actionCommand.equals(Labels.list_students)){
+        	List<Student> students = gui.getController().getStudents();
 
             // Csinálunk egy táblázatot, a CustomerTableModel alapjan, ami
             // megkapja a controltol a customereket
-            JTable table = new JTable(new UserTableModel(users));
+            JTable table = new JTable(new StudentTableModel(students));
 
             // A táblazatot rárakjuk egy ScrollPane-re, így ha az túl nagy lenne
             // az ablak méretéhez képest, akkor is görgetheto lesz

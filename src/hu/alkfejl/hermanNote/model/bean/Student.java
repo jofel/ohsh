@@ -5,78 +5,57 @@ package hu.alkfejl.hermanNote.model.bean;
  * Jobb klikk+source+generate getters/setters.
  * Meghívasa az összes nem statikus, nem transient attribútumra.
  */
-public class User {
+public class Student {
 
-    private String name;
+    
     private String eha;
-    private int room;
+    private String name;
+    private int point;
     private boolean kb;
     private boolean admin;
-    
-    
-
-    public String getName() {
-		return name;
-	}
-
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
+    private boolean user;
 	public String getEha() {
 		return eha;
 	}
-
-
-
 	public void setEha(String eha) {
 		this.eha = eha;
 	}
-
-
-
-	public int getRoom() {
-		return room;
+	public String getName() {
+		return name;
 	}
-
-
-
-	public void setRoom(int room) {
-		this.room = room;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-
-
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
 	public boolean isKb() {
 		return kb;
 	}
-
-
-
 	public void setKb(boolean kb) {
 		this.kb = kb;
 	}
-
-
-
 	public boolean isAdmin() {
 		return admin;
 	}
-
-
-
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-
-
+	public boolean isUser() {
+		return user;
+	}
+	public void setUser(boolean user) {
+		this.user = user;
+	}
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", eha=" + eha + ", room=" + room + ", kb=" + kb + ", admin=" + admin + "]";
+		return "Student [eha=" + eha + ", name=" + name + ", point=" + point + ", kb=" + kb + ", admin=" + admin
+				+ ", felhasznalo=" + user + "]";
 	}
+    
+
 
 }

@@ -7,7 +7,7 @@ import hu.alkfejl.hermanNote.model.BookShopDAOOracle;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.model.bean.Purchase;
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.BookShopGUI;
 
 /**
@@ -32,18 +32,18 @@ public class BookShopController {
         // GUI felület elindítása
         vc.startGUI();
     }
-    public boolean addUser(User u) {
+    public boolean addStudent(Student s) {
 		// Controller, business logic-ra (üzleti logika, szabályok) példa
         // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor
         // nyugdíjas ha 62-nel idõsebb
         
-        return dao.addUser(u);
+        return dao.addStudent(s);
 	}
     
-    public List<User> getUsers() {
+    public List<Student> getStudents() {
         // A customer listázásnál nincs üzleti szabály, ezért csak visszaadjuk a
         // model-tõl kapott listát.
-        return dao.getUsers();
+        return dao.getStudents();
     }
     
     public boolean addCustomer(Customer c) {

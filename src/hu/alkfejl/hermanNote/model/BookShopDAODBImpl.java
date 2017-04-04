@@ -12,7 +12,7 @@ import java.util.List;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.model.bean.Purchase;
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 
 /**
  * Ez az osztály az adatelérést szolgálja. Tényleges perzisztens
@@ -251,14 +251,15 @@ public class BookShopDAODBImpl implements BookShopDAO {
         return new ArrayList<Purchase>();
     }
 
+	
 	@Override
-	public boolean addUser(User u) {
+	public boolean addStudent(Student s) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<User> getUsers() {
+	public List<Student> getStudents() {
 		// TODO Auto-generated method stub
 		return null;
 	}

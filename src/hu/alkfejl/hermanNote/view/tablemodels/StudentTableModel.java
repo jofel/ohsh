@@ -1,6 +1,6 @@
 package hu.alkfejl.hermanNote.view.tablemodels;
 
-import hu.alkfejl.hermanNote.model.bean.User;
+import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.Labels;
 
 import java.util.HashMap;
@@ -12,22 +12,22 @@ import javax.swing.table.AbstractTableModel;
 /**
  * Egyedi table modelt az AbstractTableModelbõl tudunk származtatni.
  */
-public class UserTableModel extends AbstractTableModel {
+public class StudentTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 2093252961204461838L;
 
     // Az egyes oszlop fejlécek nevei
     private String[] columnNames = new String[] {
-            Labels.user_name, Labels.user_eha, Labels.user_room,
-            Labels.user_kb, Labels.user_admin};
+            Labels.student_eha, Labels.student_name, Labels.student_point,
+            Labels.student_kb, Labels.student_admin, Labels.student_user};
 
     // A vásárlókat tartalmazó objektum (a DAO-tól kapott átstruktúrálva)
-    Map<Integer, User> users = new HashMap<Integer, User>();
+    Map<Integer, Student> students = new HashMap<Integer, Student>();
 
-    public UserTableModel(List<User> users) {
+    public StudentTableModel(List<Student> students) {
     	super();
 
-        prepareDataStructure(users);
+        prepareDataStructure(students);
 	}
     /**
      * A controlleren keresztül megkapott users struktúráját (lista) a view
@@ -39,11 +39,11 @@ public class UserTableModel extends AbstractTableModel {
      *
      * @param users A {@link Customers}-ek listája.
      */
-	private void prepareDataStructure(List<User> users) {
+	private void prepareDataStructure(List<Student> students) {
 		int row = 0;
 
-        for (User user : users) {
-            this.users.put(row, user);
+        for (Student student : students) {
+            this.students.put(row, student);
             row++;
         }
 		
@@ -66,7 +66,7 @@ public class UserTableModel extends AbstractTableModel {
      */
     @Override
     public int getRowCount() {
-        return users.entrySet().size();
+        return students.entrySet().size();
     }
 
     /**
@@ -82,20 +82,24 @@ public class UserTableModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int col) {
-        User user = users.get(row);
+        Student student = students.get(row);
         String askedColumnName = columnNames[col];
 
-        if (askedColumnName.equals(Labels.user_name)) {
-            return user.getName();
-        } else if (askedColumnName.equals(Labels.user_eha)) {
-            return user.getEha();
-        } else if (askedColumnName.equals(Labels.user_room)) {
-            return user.getRoom();
-        } else if (askedColumnName.equals(Labels.user_kb)) {
-            return user.isKb();
-        } else if (askedColumnName.equals(Labels.user_admin)) {
-            return user.isAdmin();
+        if (askedColumnName.equals(Labels.student_eha)) {
+            return student.getEha();
+        } else if (askedColumnName.equals(Labels.student_name)) {
+            return student.getName();
+        } else if (askedColumnName.equals(Labels.student_point)) {
+            return student.getPoint();
+        } else if (askedColumnName.equals(Labels.student_kb)) {
+        	System.out.println("Student kollbizes?"+ student.isKb());
+            return student.isKb();
+        } else if (askedColumnName.equals(Labels.student_admin)) {
+            return student.isAdmin();
+        } else if (askedColumnName.equals(Labels.student_user)) {
+            return student.isUser();
         } 
+
 
         return Labels.unknown;
     }
