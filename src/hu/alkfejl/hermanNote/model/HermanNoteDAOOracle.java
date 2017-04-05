@@ -14,11 +14,11 @@ import hu.alkfejl.hermanNote.model.bean.Purchase;
 import hu.alkfejl.hermanNote.model.bean.Student;
 import oracle.jdbc.pool.OracleDataSource;
 
-public class BookShopDAOOracle implements BookShopDAO {
+public class HermanNoteDAOOracle implements HermanNoteDAO {
 	
 	List<Student> students = new ArrayList<Student>();
 	  
-	public BookShopDAOOracle(){
+	public HermanNoteDAOOracle(){
 		 try {
 			  
 			  /* Connect to the Oracle Database and using the "HR" user's schema */

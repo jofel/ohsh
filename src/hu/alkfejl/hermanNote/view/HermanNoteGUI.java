@@ -1,22 +1,21 @@
 package hu.alkfejl.hermanNote.view;
 
-import hu.alkfejl.hermanNote.Main;
-
-import hu.alkfejl.hermanNote.controller.BookShopController;
-
 import java.awt.Container;
 
 import javax.swing.JFrame;
 
+import hu.alkfejl.hermanNote.Main;
+import hu.alkfejl.hermanNote.controller.HermanNoteController;
+
 /**
  * Ez az osztály indítja el a GUI-t, és ezen keresztül érhetõ el a control osztály a többi gui elem számára.
  */
-public class BookShopGUI {
+public class HermanNoteGUI {
 
     private JFrame window;
-    private BookShopController controller;
+    private HermanNoteController controller;
 
-    public BookShopGUI(BookShopController controller) {
+    public HermanNoteGUI(HermanNoteController controller) {
         this.controller = controller;
     }
 
@@ -46,7 +45,7 @@ public class BookShopGUI {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Gyártunk egy bookMenuBar objektumot
-        BookShopMenuBar bookMenuBar = new BookShopMenuBar(this);
+        HermanNoteMenuBar bookMenuBar = new HermanNoteMenuBar(this);
 
         // Amit rárakunk a Book Shop ablakunkra
         window.setJMenuBar(bookMenuBar);
@@ -82,7 +81,7 @@ public class BookShopGUI {
      * vázának, infrastruktúrájának részét képezi, minden alkalmazásban szükség
      * van rá.
      */
-    public BookShopController getController() {
+    public HermanNoteController getController() {
         return controller;
     }
 

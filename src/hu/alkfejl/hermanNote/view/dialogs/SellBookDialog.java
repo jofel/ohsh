@@ -1,11 +1,5 @@
 package hu.alkfejl.hermanNote.view.dialogs;
 
-import hu.alkfejl.hermanNote.model.bean.Book;
-import hu.alkfejl.hermanNote.model.bean.Customer;
-import hu.alkfejl.hermanNote.model.bean.Purchase;
-import hu.alkfejl.hermanNote.view.BookShopGUI;
-import hu.alkfejl.hermanNote.view.Labels;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -28,6 +22,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import hu.alkfejl.hermanNote.model.bean.Book;
+import hu.alkfejl.hermanNote.model.bean.Customer;
+import hu.alkfejl.hermanNote.model.bean.Purchase;
+import hu.alkfejl.hermanNote.view.HermanNoteGUI;
+import hu.alkfejl.hermanNote.view.Labels;
+
 /**
  * Az osztály az új vásárlás rögzítésénél megjelenõ dialógus.
  */
@@ -41,7 +41,7 @@ public class SellBookDialog extends JDialog implements ActionListener {
     private static final String BOOK_NONE_SELECTED = "";
     private static final String CUSTOMER_NONE_SELECTED = "";
 
-    private BookShopGUI gui;
+    private HermanNoteGUI gui;
 
     private JButton okButton = new JButton(Labels.ok);
     private JButton cancelButton = new JButton(Labels.cancel);
@@ -52,7 +52,7 @@ public class SellBookDialog extends JDialog implements ActionListener {
     private Map<String, Customer> customerMap = new HashMap<String, Customer>();
     private Customer selectedCustomer;
 
-    public SellBookDialog(BookShopGUI gui, boolean modal) {
+    public SellBookDialog(HermanNoteGUI gui, boolean modal) {
         super(gui.getWindow(), modal);
 
         this.gui = gui;

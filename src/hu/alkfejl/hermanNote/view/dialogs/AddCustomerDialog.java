@@ -1,9 +1,5 @@
 package hu.alkfejl.hermanNote.view.dialogs;
 
-import hu.alkfejl.hermanNote.model.bean.Customer;
-import hu.alkfejl.hermanNote.view.BookShopGUI;
-import hu.alkfejl.hermanNote.view.Labels;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,6 +19,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import hu.alkfejl.hermanNote.model.bean.Customer;
+import hu.alkfejl.hermanNote.view.HermanNoteGUI;
+import hu.alkfejl.hermanNote.view.Labels;
+
 /**
  * Az osztály az új ügyfél felvételénél megjelenõ dialógus.
  */
@@ -30,7 +30,7 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 2072911996817368496L;
 
-    private BookShopGUI gui;
+    private HermanNoteGUI gui;
 
     // A dialógus azon vezérlõit melyekre szükség lesz az eseménykezelés során
     // osztályváltozóként definiáljuk
@@ -43,7 +43,7 @@ public class AddCustomerDialog extends JDialog implements ActionListener {
     private JButton okButton = new JButton(Labels.ok);
     private JButton cancelButton = new JButton(Labels.cancel);
 
-    public AddCustomerDialog(BookShopGUI gui, boolean modal) {
+    public AddCustomerDialog(HermanNoteGUI gui, boolean modal) {
         super(gui.getWindow(), modal);
         this.gui = gui;
 

@@ -2,32 +2,32 @@ package hu.alkfejl.hermanNote.controller;
 
 import java.util.List;
 
-import hu.alkfejl.hermanNote.model.BookShopDAO;
-import hu.alkfejl.hermanNote.model.BookShopDAOOracle;
+import hu.alkfejl.hermanNote.model.HermanNoteDAO;
+import hu.alkfejl.hermanNote.model.HermanNoteDAOOracle;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.model.bean.Purchase;
 import hu.alkfejl.hermanNote.model.bean.Student;
-import hu.alkfejl.hermanNote.view.BookShopGUI;
+import hu.alkfejl.hermanNote.view.HermanNoteGUI;
 
 /**
  * Ez az osztály vezérli az egész programot, valamint a view és model csomagokat
  * köti össze. Itt található az üzleti logika (business logic) is.
  */
-public class BookShopController {
+public class HermanNoteController {
 
     // Data Access Object - az adat elérését szolgáló objektum
     // FONTOS!!! A BookShopDAO az adatelérési réteg interfésze (absztraktciója)
     // a réteget mindig az interfészen keresztül érjük el.
     // A réteg implementációját egyszer használjuk, példányosításkor,
     // visszacastolni TILOS!!!
-    private BookShopDAO dao = new BookShopDAOOracle();
+    private HermanNoteDAO dao = new HermanNoteDAOOracle();
 
     /**
      * Elindítja az alkalmazás desktopra specializált user interface-ét.
      */
     public void startDesktop() {
-        BookShopGUI vc = new BookShopGUI(this);
+        HermanNoteGUI vc = new HermanNoteGUI(this);
 
         // GUI felület elindítása
         vc.startGUI();

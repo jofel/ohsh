@@ -10,7 +10,7 @@ import hu.alkfejl.hermanNote.model.bean.Student;
 /**
  * Az interfész a BookShop app adatelérési retegét reprezentálja.
  */
-public interface BookShopDAO {
+public interface HermanNoteDAO {
 
 	
 	/**

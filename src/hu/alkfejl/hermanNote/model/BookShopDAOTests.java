@@ -20,7 +20,7 @@ public class BookShopDAOTests {
     }
 
     public static void TestAddCustomerWithSameName() {
-        BookShopDAO dao = new BookShopDAODBImpl();
+    	HermanNoteDAO dao = new BookShopDAODBImpl();
 
         // az elsõ vásárló hozzáadása, elvárjuk, hogy sikeres legyen
         Customer customer = new Customer();
@@ -42,7 +42,7 @@ public class BookShopDAOTests {
     }
 
     public static void TestAddAndListCustomers() {
-        BookShopDAO dao = new BookShopDAODBImpl();
+    	HermanNoteDAO dao = new BookShopDAODBImpl();
 
         // Teszteljük 10-szer az addCustomer-t és utána a getCustomer-t
         // A neve mindig legyen TestCustomer + i

@@ -1,9 +1,5 @@
 package hu.alkfejl.hermanNote.view.dialogs;
 
-import hu.alkfejl.hermanNote.model.bean.Book;
-import hu.alkfejl.hermanNote.view.BookShopGUI;
-import hu.alkfejl.hermanNote.view.Labels;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -19,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import hu.alkfejl.hermanNote.model.bean.Book;
+import hu.alkfejl.hermanNote.view.HermanNoteGUI;
+import hu.alkfejl.hermanNote.view.Labels;
+
 /**
  * Az osztály az új könyv felvételénél megjelenõ dialógus.
  */
@@ -26,7 +26,7 @@ public class BuyBookDialog extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 2072911996817368496L;
 
-    private BookShopGUI gui;
+    private HermanNoteGUI gui;
 
     // A dialógus azon vezérlõit melyekre szükség lesz az eseménykezelés során
     // osztályváltozóként definiáljuk
@@ -39,7 +39,7 @@ public class BuyBookDialog extends JDialog implements ActionListener {
     private JButton okButton = new JButton(Labels.ok);
     private JButton cancelButton = new JButton(Labels.cancel);
 
-    public BuyBookDialog(BookShopGUI gui, boolean modal) {
+    public BuyBookDialog(HermanNoteGUI gui, boolean modal) {
         super(gui.getWindow(), modal);
         this.gui = gui;
 

@@ -18,7 +18,7 @@ import hu.alkfejl.hermanNote.model.bean.Student;
  * Ez az osztály az adatelérést szolgálja. Tényleges perzisztens
  * tárolót, adatbázist használ.
  */
-public class BookShopDAODBImpl implements BookShopDAO {
+public class BookShopDAODBImpl implements HermanNoteDAO {
 
     List<Customer> customers = new ArrayList<Customer>();
 

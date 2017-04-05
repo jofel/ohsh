@@ -2,7 +2,7 @@ package hu.alkfejl.hermanNote;
 
 import java.util.List;
 
-import hu.alkfejl.hermanNote.controller.BookShopController;
+import hu.alkfejl.hermanNote.controller.HermanNoteController;
 import hu.alkfejl.hermanNote.model.bean.Book;
 import hu.alkfejl.hermanNote.model.bean.Customer;
 import hu.alkfejl.hermanNote.view.Labels;
@@ -50,7 +50,7 @@ public class Main {
      * Indítja az alkalmazást.
      */
     private static void startApp() {
-        BookShopController controller = new BookShopController();
+    	HermanNoteController controller = new HermanNoteController();
        
         //példaadatok felvételét mellõzzük
         //ensureSampleDataCreated(controller);
@@ -63,7 +63,7 @@ public class Main {
      *
      * @param controller Az alkalmazás controllere.
      */
-    private static void ensureSampleDataCreated(BookShopController controller) {
+    private static void ensureSampleDataCreated(HermanNoteController controller) {
         // Elkérjük a már eltárolt könyveket.
         List<Book> storedBooks = controller.getBooks();
 
@@ -99,7 +99,7 @@ public class Main {
      *
      * @param controller Az alkalmazás controllere.
      */
-    private static void prepareBookSampleData(BookShopController controller) {
+    private static void prepareBookSampleData(HermanNoteController controller) {
         for (int i = 0; i < 10; i++) {
             Book book = new Book();
 
@@ -126,7 +126,7 @@ public class Main {
      *
      * @param controller Az alkalmazás controllere.
      */
-    private static void prepareCustomerSampleData(BookShopController controller) {
+    private static void prepareCustomerSampleData(HermanNoteController controller) {
         for (int i = 0; i < 10; i++) {
             Customer customer = new Customer();
 

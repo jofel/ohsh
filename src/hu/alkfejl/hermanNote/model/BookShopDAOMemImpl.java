@@ -13,7 +13,7 @@ import hu.alkfejl.hermanNote.model.bean.Student;
  * perzisztens tároló (pl. adatbázis), ezért csak memóriába tárolja az
  * adatokat.
  */
-public class BookShopDAOMemImpl implements BookShopDAO {
+public class BookShopDAOMemImpl implements HermanNoteDAO {
 
     private static int id = 1;
 

@@ -28,16 +28,16 @@ import hu.alkfejl.hermanNote.view.tablemodels.StudentTableModel;
  * Azért teheti ezt meg, mert a {@link JMenuBar} osztályból származik.
  * Így a menüre a this-szel hivatkozhatunk.
  */
-public class BookShopMenuBar extends JMenuBar implements ActionListener {
+public class HermanNoteMenuBar extends JMenuBar implements ActionListener {
 
     // A JMenuBar implementálja a Serializable interfészt, emiatt kell a serialVersionUID
     // Ez máshol is elõfordulhat, feloldása: az osztály mellett bal oldalt sárga
     // felkiáltójel Eclipse-ben, ráklikkelve 'Add generated serial version id'.
     // Kipróbálhatjuk, ha ezt a sort töröljük.
     private static final long serialVersionUID = 2973555574160940115L;
-    private BookShopGUI gui;
+    private HermanNoteGUI gui;
 
-    public BookShopMenuBar(BookShopGUI gui) {
+    public HermanNoteMenuBar(HermanNoteGUI gui) {
         super();
         this.gui = gui;
 

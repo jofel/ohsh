@@ -16,7 +16,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import hu.alkfejl.hermanNote.model.bean.Student;
-import hu.alkfejl.hermanNote.view.BookShopGUI;
+import hu.alkfejl.hermanNote.view.HermanNoteGUI;
 import hu.alkfejl.hermanNote.view.Labels;
 
 /**
@@ -27,7 +27,7 @@ public class AddStudentDialog extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 3382073646421158018L;
 
-	private BookShopGUI gui;
+	private HermanNoteGUI gui;
 
     // A dialógus azon vezérlõit melyekre szükség lesz az eseménykezelés során
     // osztályváltozóként definiáljuk
@@ -40,7 +40,7 @@ public class AddStudentDialog extends JDialog implements ActionListener {
     private JButton okButton = new JButton(Labels.ok);
     private JButton cancelButton = new JButton(Labels.cancel);
 
-    public AddStudentDialog(BookShopGUI gui, boolean modal) {
+    public AddStudentDialog(HermanNoteGUI gui, boolean modal) {
         super(gui.getWindow(), modal);
         this.gui = gui;
 
