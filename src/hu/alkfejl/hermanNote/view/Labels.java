@@ -13,12 +13,16 @@ package hu.alkfejl.hermanNote.view;
 public class Labels {
 
     // General labels
-    public final static String name = "Name";
+    public final static String name = "Név";
     public final static String ok = "OK";
-    public final static String cancel = "Cancel";
+    public final static String cancel = "Mégse";
     public final static String error = "Error";
     public final static String empty = "";
     public final static String unknown = "Unknown";
+    public final static String search = "Keresés";
+    public final static String edit = "Szerkesztés";
+    public final static String delete = "Törlés";
+    public final static String save = "Mentés";
 
     // Main window
     public static final String main_window_title_format = "Herman Note (%1$s)";
@@ -28,8 +32,9 @@ public class Labels {
     public final static String students = "Hallgatók";
     public final static String add_student = "Hallgató hozzáadása";
     public final static String list_students = "Hallgatók listája";
+    public final static String students_pane = "Hallgatók...";
     public final static String student_eha = "EHA";
-    public final static String student_name = "nev";
+    public final static String student_name = "Név";
     public final static String student_point = "Pontok";
     public final static String student_kb = "KB";
     public final static String student_admin = "Admin";

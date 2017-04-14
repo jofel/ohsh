@@ -18,6 +18,7 @@ import hu.alkfejl.hermanNote.view.dialogs.AddCustomerDialog;
 import hu.alkfejl.hermanNote.view.dialogs.AddStudentDialog;
 import hu.alkfejl.hermanNote.view.dialogs.BuyBookDialog;
 import hu.alkfejl.hermanNote.view.dialogs.SellBookDialog;
+import hu.alkfejl.hermanNote.view.dialogs.StudentPane;
 import hu.alkfejl.hermanNote.view.tablemodels.BookTableModel;
 import hu.alkfejl.hermanNote.view.tablemodels.CustomerTableModel;
 import hu.alkfejl.hermanNote.view.tablemodels.PurchaseTableModel;
@@ -42,7 +43,7 @@ public class HermanNoteMenuBar extends JMenuBar implements ActionListener {
         this.gui = gui;
 
         // Három menüpontot gyártunk általánosan, a createMenuPoint metódussal
-        createMenuPoint(Labels.students, Labels.add_student, Labels.list_students);
+        createMenuPoint(Labels.students, Labels.add_student, Labels.list_students, Labels.students_pane);
         //createMenuPoint(Labels.customer, Labels.add_customer, Labels.list_customers);
         //createMenuPoint(Labels.book, Labels.buy_book, Labels.list_books);
         //createMenuPoint(Labels.sell, Labels.sell_book, Labels.list_sold_books);
@@ -94,6 +95,23 @@ public class HermanNoteMenuBar extends JMenuBar implements ActionListener {
 
             // Ezt a ScrollPane-t állítjuk be a fõablak tartalmának
             gui.setActualContent(container);
+            
+        } else if (actionCommand.equals(Labels.students_pane)){
+        	StudentPane sp = new StudentPane(gui);
+        	/*
+        	List<Student> students = gui.getController().getStudents();
+
+            // Csinálunk egy táblázatot, a CustomerTableModel alapjan, ami
+            // megkapja a controltol a customereket
+            JTable table = new JTable(new StudentTableModel(students));
+
+            // A táblazatot rárakjuk egy ScrollPane-re, így ha az túl nagy lenne
+            // az ablak méretéhez képest, akkor is görgetheto lesz
+            JScrollPane container = new JScrollPane(table);
+
+            // Ezt a ScrollPane-t állítjuk be a fõablak tartalmának
+            gui.setActualContent(container);
+            */
             
         } else if (actionCommand.equals(Labels.add_customer)) {
             // Ha az új ügyfél felvételét választották, akkor egy

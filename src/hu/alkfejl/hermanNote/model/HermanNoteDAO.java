@@ -73,5 +73,6 @@ public interface HermanNoteDAO {
      */
     public List<Purchase> getPurchases();
 
+
 	
 }

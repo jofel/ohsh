@@ -84,5 +84,6 @@ public class HermanNoteController {
     public List<Purchase> getPurchases(){
         return dao.getPurchases();
     }
+	
 
 }

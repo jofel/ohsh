@@ -197,6 +197,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		return students;
 	}
 	
+	
 	/**
      * Ellenõrzi a {@link #customers} integritását, a {@link Customer#getName()}
      * egyedi kell legyen.
@@ -252,6 +253,8 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 

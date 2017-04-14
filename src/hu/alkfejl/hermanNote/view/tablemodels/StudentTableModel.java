@@ -18,8 +18,9 @@ public class StudentTableModel extends AbstractTableModel {
 
     // Az egyes oszlop fejlécek nevei
     private String[] columnNames = new String[] {
-            Labels.student_eha, Labels.student_name, Labels.student_point,
-            Labels.student_kb, Labels.student_admin, Labels.student_user};
+            Labels.student_eha, Labels.student_name
+            //, Labels.student_point, Labels.student_kb, Labels.student_admin, Labels.student_user
+            };
 
     // A vásárlókat tartalmazó objektum (a DAO-tól kapott átstruktúrálva)
     Map<Integer, Student> students = new HashMap<Integer, Student>();
@@ -92,7 +93,7 @@ public class StudentTableModel extends AbstractTableModel {
         } else if (askedColumnName.equals(Labels.student_point)) {
             return student.getPoint();
         } else if (askedColumnName.equals(Labels.student_kb)) {
-        	System.out.println("Student kollbizes?"+ student.isKb());
+        	//System.out.println("Student kollbizes?"+ student.isKb());
             return student.isKb();
         } else if (askedColumnName.equals(Labels.student_admin)) {
             return student.isAdmin();
