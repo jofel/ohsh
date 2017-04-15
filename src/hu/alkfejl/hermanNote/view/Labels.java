@@ -16,13 +16,14 @@ public class Labels {
     public final static String name = "Név";
     public final static String ok = "OK";
     public final static String cancel = "Mégse";
-    public final static String error = "Error";
+    public final static String error = "Hiba";
     public final static String empty = "";
     public final static String unknown = "Unknown";
     public final static String search = "Keresés";
     public final static String edit = "Szerkesztés";
     public final static String delete = "Törlés";
     public final static String save = "Mentés";
+    public final static String print = "Nyomtatás";
 
     // Main window
     public static final String main_window_title_format = "Herman Note (%1$s)";
@@ -65,8 +66,8 @@ public class Labels {
     public final static String qualification = "Qualification";
     public final static String student = "Student";
     public final static String rented = "Rented";
-    public final static String customer_name_is_required = "Customer name is required!";
-    public final static String customer_exists = "Customer already exists!";
+    public final static String student_name_is_required = "Hallgató nevét ki kell tölteni!";
+    public final static String student_exists = "Hallgató felvétele sikertelen";
 
     // Book labels
     public final static String book = "Book";

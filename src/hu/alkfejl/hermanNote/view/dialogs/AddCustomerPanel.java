@@ -156,7 +156,7 @@ public class AddCustomerPanel extends JPanel implements ActionListener {
                 // error dialogra (JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(
                         gui.getWindow(),
-                        Labels.customer_name_is_required,
+                        Labels.student_name_is_required,
                         Labels.error,
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -176,7 +176,7 @@ public class AddCustomerPanel extends JPanel implements ActionListener {
                 // írunk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(
                         gui.getWindow(),
-                        Labels.customer_exists,
+                        Labels.student_exists,
                         Labels.error,
                         JOptionPane.ERROR_MESSAGE);
             } else {

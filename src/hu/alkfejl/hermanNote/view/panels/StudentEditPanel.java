@@ -1,11 +1,13 @@
-package hu.alkfejl.hermanNote.view.dialogs;
+package hu.alkfejl.hermanNote.view.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -21,7 +23,7 @@ import hu.alkfejl.hermanNote.view.Labels;
 /**
  * Az osztály az új ügyfél felvételénél megjelenõ dialógus.
  */
-public class StudentSearchPanel extends JPanel implements ActionListener {
+public class StudentEditPanel extends JPanel implements ActionListener {
 
 
     private static final long serialVersionUID = 3382073646421158018L;
@@ -36,10 +38,13 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     private JCheckBox kbCheck = new JCheckBox();
     private JCheckBox adminCheck = new JCheckBox();
     private JCheckBox userCheck = new JCheckBox();
-    private JButton searchButton = new JButton(Labels.search);
-    private JButton cancelButton = new JButton(Labels.cancel);
+    private JButton saveButton = new JButton(Labels.save);
+    private JButton printButton = new JButton(Labels.print);
+    private JButton refreshButton = new JButton(Labels.cancel);
+    
+    Color settingsColor = new Color(224, 224, 224);
 
-    public StudentSearchPanel(HermanNoteGUI gui) {
+    public StudentEditPanel(HermanNoteGUI gui) {
     	this.gui=gui;
     	
     	 // A beállításokat tartalmazó panel gyártása
@@ -92,18 +97,34 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
 
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
-
+        
         // A panel elrendezése folytonos, középre igazítva
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        // Hozzáadjuk az ok gombot, és figyelünk rá
-        buttonPanel.add(searchButton);
-        searchButton.addActionListener(this);
+        // Hozzáadjuk az save gombot, és figyelünk rá
+        ImageIcon saveIcon = new ImageIcon("src/img/save.png");
+        saveButton = new JButton();
+        saveButton.setBackground(settingsColor);
+        saveButton.setIcon(saveIcon);
+        saveButton.addActionListener(this);
+        buttonPanel.add(saveButton);
 
-        // Hozzáadjuk a cancel gombot, és figyelünk rá
-        buttonPanel.add(cancelButton);
-        cancelButton.addActionListener(this);
-
+        // Hozzáadjuk a refresh gombot, és figyelünk rá
+        ImageIcon printIcon = new ImageIcon("src/img/print.png");
+        printButton = new JButton();
+        printButton.setBackground(settingsColor);
+        printButton.setIcon(printIcon);
+        printButton.addActionListener(this);
+        buttonPanel.add(printButton);
+        
+        // Hozzáadjuk a refresh gombot, és figyelünk rá
+        ImageIcon refreshIcon = new ImageIcon("src/img/refresh.png");
+        refreshButton = new JButton();
+        refreshButton.setBackground(settingsColor);
+        refreshButton.setIcon(refreshIcon);
+        refreshButton.addActionListener(this);
+        buttonPanel.add(refreshButton);
+        
         return buttonPanel;
     }
 
@@ -123,16 +144,17 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (searchButton == e.getSource()) {
+        if (saveButton == e.getSource()) {
             // Ha az OK gombot nyomták meg, akkor megpróbáljuk felvenni az
             // ügyfelet
-
+        	System.out.println("click on refreshButton");
+        	
             if (nameTextfield.getText().isEmpty()) {
                 // Ha nem adtak meg nevet, akkor egy hibaüzenetet írunk ki egy
                 // error dialogra (JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(
                         gui.getWindow(),
-                        Labels.customer_name_is_required,
+                        Labels.student_name_is_required,
                         Labels.error,
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -153,7 +175,7 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
                 // írunk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
                 JOptionPane.showMessageDialog(
                         gui.getWindow(),
-                        Labels.customer_exists,
+                        Labels.student_exists,
                         Labels.error,
                         JOptionPane.ERROR_MESSAGE);
             } else {
@@ -161,9 +183,20 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
                 //setVisible(false);
             	//StudentPane.table.repaint();
             }
-        } else if (cancelButton == e.getSource()) {
-            // cancel esetén egyszerûen bezárjuk az ablakot
-            // setVisible(false);
+        } else if (refreshButton == e.getSource()) {
+        	System.out.println("click on refreshButton");
+        	ehaTextfield.setText("");
+        	nameTextfield.setText("");
+        	pointSpinner.setValue(0);
+        	kbCheck.setSelected(false);
+        	adminCheck.setSelected(false);
+        	userCheck.setSelected(false);
+        	
+        	nameTextfield.setText("");
+        	nameTextfield.setText("");
+        	nameTextfield.setText("");
+        } else if (printButton == e.getSource()) {
+        	System.out.println("click on printButton");
         }
     }
 

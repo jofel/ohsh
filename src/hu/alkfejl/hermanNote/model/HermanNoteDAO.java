@@ -14,20 +14,27 @@ public interface HermanNoteDAO {
 
 	
 	/**
-     * Hozzáad egy {@link User}-t az adattárhoz.
+     * Hozzáad egy {@link Student}-t az adattárhoz.
      *
-     * @param user A tárolandó {@link Customer}.
+     * @param user A tárolandó {@link Student}.
      * @return Igaz, ha sikeresen tárolva, hamis, egyébként.
      */
 	public boolean addStudent(Student s);
 	
 	 /**
-     * Visszaadja a tárolt {@link User} példányokat.
+     * Visszaadja a tárolt {@link Student} példányokat.
      *
-     * @return A tárolt {@link User}-ek listája.
+     * @return A tárolt {@link Student}-ek listája.
      */
     public List<Student> getStudents();
     
+    /**
+     * Visszaadja a tárolt {@link Student} példányokat.
+     *
+     * @return A tárolt {@link Student}-ek listája.
+     */
+    public List<Student> searchStudent(Student s);
+
     /**
      * Hozzáad egy {@link Customer}-t az adattárhoz.
      *
@@ -73,6 +80,7 @@ public interface HermanNoteDAO {
      */
     public List<Purchase> getPurchases();
 
+	
 
 	
 }

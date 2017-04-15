@@ -46,6 +46,14 @@ public class HermanNoteController {
         return dao.getStudents();
     }
     
+    public List<Student> searchStudent(Student s) {
+		// Controller, business logic-ra (üzleti logika, szabályok) példa
+        // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor
+        // nyugdíjas ha 62-nel idõsebb
+        
+        return dao.searchStudent(s);
+	}
+    
     public boolean addCustomer(Customer c) {
         // Controller, business logic-ra (üzleti logika, szabályok) példa
         // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor

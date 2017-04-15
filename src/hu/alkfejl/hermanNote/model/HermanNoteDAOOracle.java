@@ -39,6 +39,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 	        "VALUES (?, ?, ?, ?, ?, ?)";
 	
 	private static final String SQL_LIST_STUDENTS = "SELECT * FROM hallgato";
+	private static String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato";
 	
 	public boolean addStudent(Student student) {
 		boolean rvSucceeded = false;
@@ -197,6 +198,91 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		return students;
 	}
 	
+	/**
+     *
+     */
+	@Override
+	public List<Student> searchStudent(Student s) {
+		Connection conn = null;
+	    Statement st = null;
+	    
+	    // Töröljük a memóriából a usereket (azért tartjuk bennt, mert
+        // lehetnek késõbb olyan mûveletek, melyekhez nem kell frissíteni)
+	    students.clear();
+	    
+		try {
+			// Az adatbázis kapcsolatunkat a OracleDataSource segítségével hozzuk létre
+            OracleDataSource ods = new OracleDataSource();
+	  		ods.setURL("jdbc:oracle:thin:@localhost:1521:xe");
+	  		
+	  		// Megadjuk, hogy a ODBC milyen driveren keresztul milyen fájlt keressen
+			conn = ods.getConnection("SYSTEM","SYS");
+			
+			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
+            // paraméterezhetõ) utasítást
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato";
+			boolean sqlBegin = false;
+			if (s.getEha() != ""){
+				sqlBegin = true;
+				SQL_SEARCH_STUDENTS += " WHERE eha LIKE '" + s.getEha() + "' ";
+				
+			} /*else if (s.getEha() == ""){
+				
+			} else if (s.getEha() == ""){
+				
+			} else if (s.getEha() == ""){
+				
+			}*/
+			// Az utasítás objektumon keresztül indítunk egy query-t
+            // Az eredményeket egy ResultSet objektumban kapjuk vissza
+			System.out.println( SQL_SEARCH_STUDENTS );
+			ResultSet rs = st.executeQuery( SQL_SEARCH_STUDENTS );
+			
+			
+			// Bejárjuk a visszakapott ResultSet-et (ami a usereket tartalmazza)
+			while (rs.next()) {
+				// új Usert hozunk létre
+				Student student = new Student();
+				
+				// A user nevét a ResultSet aktuális sorából olvassuk (name column)
+				
+                student.setEha(rs.getString("eha"));
+                student.setName(rs.getString("nev"));
+                student.setPoint(Integer.parseInt(rs.getString("pont")));
+                student.setKb(rs.getInt("kb")==1?true:false);
+                student.setAdmin(rs.getInt("admin")==1?true:false);
+                student.setUser(rs.getInt("felhasznalo")==1?true:false);
+                
+                students.add(student);
+                
+			}
+		}catch ( SQLException ex ) {
+			System.out.println("Failed to execute listing users.");
+			ex.printStackTrace();
+		} finally {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to close statement when listing users.");
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to close connection when listing users.");
+                e.printStackTrace();
+            }
+        }
+		
+		return students;
+	}
+	
 	
 	/**
      * Ellenõrzi a {@link #customers} integritását, a {@link Customer#getName()}
@@ -253,6 +339,8 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 

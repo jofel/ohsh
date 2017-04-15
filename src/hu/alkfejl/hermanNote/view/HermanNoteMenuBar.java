@@ -18,7 +18,7 @@ import hu.alkfejl.hermanNote.view.dialogs.AddCustomerDialog;
 import hu.alkfejl.hermanNote.view.dialogs.AddStudentDialog;
 import hu.alkfejl.hermanNote.view.dialogs.BuyBookDialog;
 import hu.alkfejl.hermanNote.view.dialogs.SellBookDialog;
-import hu.alkfejl.hermanNote.view.dialogs.StudentPane;
+import hu.alkfejl.hermanNote.view.splitPanes.StudentSplitPane;
 import hu.alkfejl.hermanNote.view.tablemodels.BookTableModel;
 import hu.alkfejl.hermanNote.view.tablemodels.CustomerTableModel;
 import hu.alkfejl.hermanNote.view.tablemodels.PurchaseTableModel;
@@ -97,7 +97,7 @@ public class HermanNoteMenuBar extends JMenuBar implements ActionListener {
             gui.setActualContent(container);
             
         } else if (actionCommand.equals(Labels.students_pane)){
-        	StudentPane sp = new StudentPane(gui);
+        	StudentSplitPane sp = new StudentSplitPane(gui);
         	/*
         	List<Student> students = gui.getController().getStudents();
 

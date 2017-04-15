@@ -1,6 +1,9 @@
-package hu.alkfejl.hermanNote.view.dialogs;
+package hu.alkfejl.hermanNote.view.splitPanes;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -8,20 +11,27 @@ import javax.swing.JSplitPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.HermanNoteGUI;
+import hu.alkfejl.hermanNote.view.panels.StudentEditPanel;
+import hu.alkfejl.hermanNote.view.panels.StudentSearchPanel;
+import hu.alkfejl.hermanNote.view.panels.StudentTablePanel;
 
-public class StudentPane extends JPanel implements ListSelectionListener {
+public class StudentSplitPane extends JPanel implements ActionListener {
 
 	//static JTable table;
     private JSplitPane splitPane;
-    
+    private StudentSearchPanel sp;
     private HermanNoteGUI gui;
+    private JScrollPane selectPane;
+    private JScrollPane searchPane;
     //private String[] imageNames = { "Bird", "Cat", "Dog", "Rabbit", "Pig", "dukeWaveRed",
     //    "kathyCosmo", "lainesTongue", "left", "middle", "right", "stickerface"};
-    public StudentPane(HermanNoteGUI gui) {
+    public StudentSplitPane(HermanNoteGUI gui) {
     	super();
         this.gui = gui;
  
+        
         //Create the list of images and put it in a scroll pane.
         /* 
         list = new JList(imageNames);
@@ -29,17 +39,17 @@ public class StudentPane extends JPanel implements ListSelectionListener {
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
          */
-        StudentSearchPanel sp = new StudentSearchPanel(gui);
-        //sp.setVisible(true);
+        sp = new StudentSearchPanel(gui);
         JScrollPane searchPane = new JScrollPane(sp); 
-        
+        sp.getSearchButton().addActionListener(this);
+        //List<Student> students =
         
         
         
 //        List<Student> students = gui.getController().getStudents();
 //        table = new JTable(new StudentTableModel(students));
-        StudentTablePanel tp = new StudentTablePanel(gui);
-        JScrollPane selectPane = new JScrollPane(tp);
+//        StudentTablePanel tp = new StudentTablePanel(gui);
+//        selectPane = new JScrollPane(tp);
         
         
         
@@ -51,7 +61,9 @@ public class StudentPane extends JPanel implements ListSelectionListener {
         selectorPane.setOneTouchExpandable(true);
         selectorPane.setDividerLocation(250);
         
-        JScrollPane editPane = new JScrollPane();
+        StudentEditPanel ep = new StudentEditPanel(gui);
+        JScrollPane editPane = new JScrollPane(ep); 
+        
         
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
         		selectorPane, editPane);
@@ -92,13 +104,74 @@ public class StudentPane extends JPanel implements ListSelectionListener {
 //        return list;
 //    }
  
-    public JSplitPane getSplitPane() {
+    public StudentSplitPane(HermanNoteGUI gui2, Student student) {
+		// TODO Auto-generated constructor stub
+    	
+    	super();
+        gui = gui2;
+        
+    	StudentTablePanel tp = new StudentTablePanel(gui, student);
+        selectPane = new JScrollPane(tp);
+
+        
+        sp = new StudentSearchPanel(gui);
+        JScrollPane searchPane = new JScrollPane(sp); 
+        sp.getSearchButton().addActionListener(this);
+
+        JSplitPane selectorPane = new JSplitPane();
+        selectorPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+        		searchPane, selectPane);
+        selectorPane.setOneTouchExpandable(true);
+        selectorPane.setDividerLocation(250);
+        
+        StudentEditPanel ep = new StudentEditPanel(gui);
+        JScrollPane editPane = new JScrollPane(ep); 
+        
+        
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+        		selectorPane, editPane);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(250);
+       // splitPane.setResizeWeight(.001d);
+ 
+        //Provide minimum sizes for the two components in the split pane.
+        Dimension minimumSize = new Dimension(100, 50);
+        searchPane.setMinimumSize(minimumSize);
+        searchPane.setMinimumSize(minimumSize);
+ 
+        //Provide a preferred size for the split pane.
+        splitPane.setPreferredSize(new Dimension(400, 200));
+        //updateLabel(imageNames[list.getSelectedIndex()]);
+        gui.setActualContent(splitPane);
+	}
+
+	public JSplitPane getSplitPane() {
         return splitPane;
     }
 
+//	@Override
+//	public void valueChanged(ListSelectionEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
 	@Override
-	public void valueChanged(ListSelectionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
+		if (sp.getSearchButton() == e.getSource()) {
+			System.out.println("click on refreshButton2");
+			
+			Student student = new Student();
+	            
+            student.setEha(sp.getEhaTextfield().getText());
+            student.setName(sp.getNameTextfield().getText());
+            student.setPoint((Integer)sp.getPointSpinner().getValue());
+            student.setKb(sp.getKbCheck().isSelected());
+            student.setAdmin(sp.getAdminCheck().isSelected());
+            student.setUser(sp.getUserCheck().isSelected());
+            
+            StudentSplitPane sp = new StudentSplitPane(gui, student);
+	            
+	    }
 		
 	}
  
