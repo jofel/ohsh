@@ -10,10 +10,19 @@ public class Student {
     
     private String eha;
     private String name;
-    private int point;
+    private int point = 0;
     private boolean kb;
     private boolean admin;
     private boolean user;
+    private int room = 0;
+    
+    
+	public int getRoom() {
+		return room;
+	}
+	public void setRoom(int room) {
+		this.room = room;
+	}
 	public String getEha() {
 		return eha;
 	}

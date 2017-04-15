@@ -221,19 +221,55 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
             // paraméterezhetõ) utasítást
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato";
-			boolean sqlBegin = false;
-			if (s.getEha() != ""){
-				sqlBegin = true;
-				SQL_SEARCH_STUDENTS += " WHERE eha LIKE '" + s.getEha() + "' ";
-				
-			} /*else if (s.getEha() == ""){
-				
-			} else if (s.getEha() == ""){
-				
-			} else if (s.getEha() == ""){
-				
-			}*/
+			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato ";
+			System.out.println(s.getEha());
+			System.out.println(s.getName());
+			boolean sqlBegin = true;
+			if (!s.getEha().equals("")){
+				SQL_SEARCH_STUDENTS += "WHERE eha LIKE '" + s.getEha() + "' ";
+				sqlBegin = false;
+			} 
+			if (!s.getName().equals("")){
+				if (sqlBegin == false){
+					SQL_SEARCH_STUDENTS += "AND ";
+				} else {
+					SQL_SEARCH_STUDENTS += "WHERE ";
+					sqlBegin = false;
+				}
+				SQL_SEARCH_STUDENTS += "nev LIKE '" + s.getName() + "' ";
+			} 
+			if (s.isKb() == true){
+				if (sqlBegin == false){
+					SQL_SEARCH_STUDENTS += "AND ";
+				} else {
+					SQL_SEARCH_STUDENTS += "WHERE ";
+					sqlBegin = false;
+				}
+				SQL_SEARCH_STUDENTS += "kb = 1 ";
+			} 
+			if (s.isAdmin() == true){
+				if (sqlBegin == false){
+					SQL_SEARCH_STUDENTS += "AND ";
+				} else {
+					SQL_SEARCH_STUDENTS += "WHERE ";
+					sqlBegin = false;
+				}
+				SQL_SEARCH_STUDENTS += "admin = 1 ";
+			} 
+			if (s.isUser() == true){
+				if (sqlBegin == false){
+					SQL_SEARCH_STUDENTS += "AND ";
+				} else {
+					SQL_SEARCH_STUDENTS += "WHERE ";
+					sqlBegin = false;
+				}
+				SQL_SEARCH_STUDENTS += "felhasznalo = 1 ";
+			} 
+			
+			
+			
+			
+			
 			// Az utasítás objektumon keresztül indítunk egy query-t
             // Az eredményeket egy ResultSet objektumban kapjuk vissza
 			System.out.println( SQL_SEARCH_STUDENTS );

@@ -40,6 +40,7 @@ public class Labels {
     public final static String student_kb = "KB";
     public final static String student_admin = "Admin";
     public final static String student_user = "Felhasználó";
+    public static final String student_room = "Szoba";
     
     
     
@@ -99,4 +100,5 @@ public class Labels {
             "Válassz ki könyvet és vásárlót!";
     public final static String purchase_failed =
             "Nem sikerült rögzíteni a vásárlást!";
+	
 }
