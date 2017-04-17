@@ -403,17 +403,5 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		return null;
 	}
 
-	
-	
-
-	
-
-	
-
-	
-
-	
-	
-	
 
 }
