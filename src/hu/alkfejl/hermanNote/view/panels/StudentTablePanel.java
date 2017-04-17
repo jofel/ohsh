@@ -73,8 +73,9 @@ public class StudentTablePanel extends JPanel implements ActionListener {
     }
 	
 	private JTable createTable() {
-	        
+			
 	        List<Student> students = gui.getController().getStudents();
+	        
 	        JTable table = new JTable(new StudentTableModel(students));
 	        //table.setBackground(Color.lightGray);	        
 	        return table;
@@ -83,6 +84,7 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 	private JTable createTable(Student student) {
         
         List<Student> students = gui.getController().searchStudent(student);
+        System.out.println("createTable " + students.size());
         JTable table = new JTable(new StudentTableModel(students));
         //table.setBackground(Color.lightGray);	        
         return table;

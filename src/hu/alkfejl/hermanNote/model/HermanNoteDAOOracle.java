@@ -35,19 +35,23 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 	}
 	private static final String SQL_ADD_STUDENT =
 	        "INSERT INTO hallgato " +
-	        "(eha, nev, pont, kb, admin, felhasznalo)" +
-	        "VALUES (?, ?, ?, ?, ?, ?)";
+	        "(nev, pont, kb, admin, felhasznalo)" +
+	        "VALUES (UPPER(?), ?, ?, ?, ?)";
 	
 	private static final String SQL_LIST_STUDENTS = "SELECT * FROM hallgato";
+
+	private static final String SQL_ADD_STUDENT_ROOM = "INSERT INTO szoba (id, szobaszam) VALUES ((SELECT MAX(id) FROM hallgato), ?)";
+	
 	private static String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato";
 	
 	public boolean addStudent(Student student) {
 		boolean rvSucceeded = false;
 		
 		Connection conn = null;
-        PreparedStatement pst = null;
+        PreparedStatement pst1 = null;
+        PreparedStatement pst2 = null;
         
-		if (!checkUserNameUnique(student)) {
+		if (!checkUserIdUnique(student)) {
             return false;
         }
 		
@@ -62,28 +66,41 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 			
 			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
             // paraméterezhetõ) utasítást
-			pst = conn.prepareStatement(SQL_ADD_STUDENT);
+			pst1 = conn.prepareStatement(SQL_ADD_STUDENT);
 			
 			// Az egyes parametéreket sorban kell megadni, pozíció alapján, ami
             // 1-tõl indul
             // Célszerû egy indexet inkrementálni, mivel ha az egyik paraméter
             // kiesik, akkor nem kell az utána következõeket újra számozni...
             int index = 1;
-            pst.setString(index++, student.getEha());
-            pst.setString(index++, student.getName());
-            pst.setInt(index++, student.getPoint());
-            pst.setInt(index++, student.isKb() ? 1 : 0);
-            System.out.println("Student kollbizes?"+ student.isKb());
-            pst.setInt(index++, student.isAdmin() ? 1 : 0);
-            pst.setInt(index++, student.isUser() ? 1 : 0);
+            //pst.setString(index++, student.getEha());
+            pst1.setString(index++, student.getName());
+            pst1.setInt(index++, student.getPoint());
+            pst1.setInt(index++, student.isKb() ? 1 : 0);
+            //System.out.println("Student kollbizes?"+ student.isKb());
+            pst1.setInt(index++, student.isAdmin() ? 1 : 0);
+            pst1.setInt(index++, student.isUser() ? 1 : 0);
+            
+            int rowsAffected1 = pst1.executeUpdate();
+            System.out.println("rowsAffected1: "+ rowsAffected1);
+            
+            index = 1;
+            pst2 = conn.prepareStatement(SQL_ADD_STUDENT_ROOM);
+            pst2.setInt(index++, student.getRoom());
+            
+            
+            
+            
+            
             
             // Az ExecuteUpdate paranccsal végrehajtjuk az utasítást
             // Az executeUpdate visszaadja, hogy hány sort érintett az SQL ha 
             // DML-t hajtunk végre (DDL esetén 0-t ad vissza)
-            int rowsAffected = pst.executeUpdate();
+            int rowsAffected2 = pst2.executeUpdate();
+            
 			
          // csak akkor sikeres, ha valóban volt érintett sor
-            if (rowsAffected == 1) {
+            if (rowsAffected1 == 1 && rowsAffected2==1) {
                 rvSucceeded = true;
             }
         } catch (SQLException e) {
@@ -99,8 +116,10 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
             // Minden egyes objektumot külön try-catch ágban kell megpróbálni
             // bezárni!
             try {
-                if (pst != null) {
-                    pst.close();
+                if (pst1 != null) {
+                    pst1.close();
+                } else if (pst2 != null){
+                	pst2.close();
                 }
             } catch (SQLException e) {
                 System.out.println("Failed to close statement when adding user.");
@@ -162,7 +181,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 				
 				// A user nevét a ResultSet aktuális sorából olvassuk (name column)
 				
-                student.setEha(rs.getString("eha"));
+                student.setId(0);
                 student.setName(rs.getString("nev"));
                 student.setPoint(Integer.parseInt(rs.getString("pont")));
                 student.setKb(rs.getInt("kb")==1?true:false);
@@ -221,22 +240,28 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
             // paraméterezhetõ) utasítást
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato ";
-			System.out.println(s.getEha());
+			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato, szoba ";
+			//System.out.println(s.getEha());
 			System.out.println(s.getName());
 			boolean sqlBegin = true;
-			if (!s.getEha().equals("")){
-				SQL_SEARCH_STUDENTS += "WHERE eha LIKE '" + s.getEha() + "' ";
+//			if (!s.getEha().equals("")){
+//				SQL_SEARCH_STUDENTS += "WHERE eha LIKE '" + s.getEha() + "' ";
+//				sqlBegin = false;
+//			} 
+			if (!s.getName().equals("")){
+				
+				SQL_SEARCH_STUDENTS += "WHERE hallgato.id = szoba.id AND REGEXP_LIKE(nev, '^" + s.getName() + "(*)')";
 				sqlBegin = false;
 			} 
-			if (!s.getName().equals("")){
+			if (s.getRoom()!=0){
 				if (sqlBegin == false){
 					SQL_SEARCH_STUDENTS += "AND ";
 				} else {
 					SQL_SEARCH_STUDENTS += "WHERE ";
 					sqlBegin = false;
 				}
-				SQL_SEARCH_STUDENTS += "nev LIKE '" + s.getName() + "' ";
+				//regex pl: ^9(*) -> az összes 9-el kezdõdõ szobát adja.
+				SQL_SEARCH_STUDENTS += "hallgato.id = szoba.id AND REGEXP_LIKE (szobaszam, '^" + s.getRoom() + "(*)')";
 			} 
 			if (s.isKb() == true){
 				if (sqlBegin == false){
@@ -265,16 +290,12 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 				}
 				SQL_SEARCH_STUDENTS += "felhasznalo = 1 ";
 			} 
-			
-			
-			
-			
-			
 			// Az utasítás objektumon keresztül indítunk egy query-t
             // Az eredményeket egy ResultSet objektumban kapjuk vissza
 			System.out.println( SQL_SEARCH_STUDENTS );
 			ResultSet rs = st.executeQuery( SQL_SEARCH_STUDENTS );
-			
+			System.out.println( "RS? ");
+			System.out.println( "RS " + rs );
 			
 			// Bejárjuk a visszakapott ResultSet-et (ami a usereket tartalmazza)
 			while (rs.next()) {
@@ -283,7 +304,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 				
 				// A user nevét a ResultSet aktuális sorából olvassuk (name column)
 				
-                student.setEha(rs.getString("eha"));
+                student.setId(rs.getInt("id"));
                 student.setName(rs.getString("nev"));
                 student.setPoint(Integer.parseInt(rs.getString("pont")));
                 student.setKb(rs.getInt("kb")==1?true:false);
@@ -291,6 +312,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
                 student.setUser(rs.getInt("felhasznalo")==1?true:false);
                 
                 students.add(student);
+                System.out.println( rs + ".Student ");
                 
 			}
 		}catch ( SQLException ex ) {
@@ -319,6 +341,11 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		return students;
 	}
 	
+	@Override
+	public boolean removeStudent(Student s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	/**
      * Ellenõrzi a {@link #customers} integritását, a {@link Customer#getName()}
@@ -327,11 +354,11 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
      * @param newCustomer Az újonnan felveendõ {@link Customer}.
      * @return True, ha a név egyedi, false egyébként.
      */
-    private boolean checkUserNameUnique(Student newStudent) {
+    private boolean checkUserIdUnique(Student newStudent) {
         boolean rvIsValid = true;
 
         for (Student student : students) {
-            if (student.getEha().equals(newStudent.getEha())) {
+            if (student.getId()==(newStudent.getId())) {
                 rvIsValid = false;
                 break;
             }
@@ -375,6 +402,9 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+	
 
 	
 

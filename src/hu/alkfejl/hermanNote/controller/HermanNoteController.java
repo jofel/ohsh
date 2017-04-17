@@ -40,6 +40,14 @@ public class HermanNoteController {
         return dao.addStudent(s);
 	}
     
+    public boolean removeStudent(Student s) {
+		// Controller, business logic-ra (üzleti logika, szabályok) példa
+        // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor
+        // nyugdíjas ha 62-nel idõsebb
+        
+        return dao.removeStudent(s);
+	}
+    
     public List<Student> getStudents() {
         // A customer listázásnál nincs üzleti szabály, ezért csak visszaadjuk a
         // model-tõl kapott listát.

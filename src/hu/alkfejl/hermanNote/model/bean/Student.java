@@ -8,7 +8,7 @@ package hu.alkfejl.hermanNote.model.bean;
 public class Student {
 
     
-    private String eha;
+    private int id = 0;
     private String name;
     private int point = 0;
     private boolean kb;
@@ -17,17 +17,17 @@ public class Student {
     private int room = 0;
     
     
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getRoom() {
 		return room;
 	}
 	public void setRoom(int room) {
 		this.room = room;
-	}
-	public String getEha() {
-		return eha;
-	}
-	public void setEha(String eha) {
-		this.eha = eha;
 	}
 	public String getName() {
 		return name;
@@ -61,7 +61,7 @@ public class Student {
 	}
 	@Override
 	public String toString() {
-		return "Student [eha=" + eha + ", name=" + name + ", point=" + point + ", kb=" + kb + ", admin=" + admin
+		return "Student [id=" + id + ", name=" + name + ", point=" + point + ", kb=" + kb + ", admin=" + admin
 				+ ", felhasznalo=" + user + "]";
 	}
     

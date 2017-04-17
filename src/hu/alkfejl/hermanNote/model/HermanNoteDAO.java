@@ -80,6 +80,8 @@ public interface HermanNoteDAO {
      */
     public List<Purchase> getPurchases();
 
+	public boolean removeStudent(Student s);
+
 	
 
 	

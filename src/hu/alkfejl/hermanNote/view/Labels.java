@@ -67,7 +67,8 @@ public class Labels {
     public final static String qualification = "Qualification";
     public final static String student = "Student";
     public final static String rented = "Rented";
-    public final static String student_name_is_required = "Hallgató nevét ki kell tölteni!";
+    public final static String student_name_is_required = "A 'Név' mezõt ki kell tölteni!";
+	public final static String student_room_is_required= "A 'Szoba' mezõt ki kell tölteni";
     public final static String student_exists = "Hallgató felvétele sikertelen";
 
     // Book labels
@@ -100,5 +101,7 @@ public class Labels {
             "Válassz ki könyvet és vásárlót!";
     public final static String purchase_failed =
             "Nem sikerült rögzíteni a vásárlást!";
+	public final static String student_id = "ID";
+
 	
 }

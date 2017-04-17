@@ -32,8 +32,9 @@ public class StudentEditPanel extends JPanel implements ActionListener {
 
     // A dialógus azon vezérlõit melyekre szükség lesz az eseménykezelés során
     // osztályváltozóként definiáljuk
-    private JTextField ehaTextfield = new JTextField(10);
+	
     private JTextField nameTextfield = new JTextField(10);
+    private JTextField roomTextfield = new JTextField(10);
     private JSpinner pointSpinner = new JSpinner();
     private JCheckBox kbCheck = new JCheckBox();
     private JCheckBox adminCheck = new JCheckBox();
@@ -67,14 +68,14 @@ public class StudentEditPanel extends JPanel implements ActionListener {
 
         // A panel elrendezése mátrix, 5 sor és 2 oszlop, a cellák egyforma méretûek
         settingPanel.setLayout(new GridLayout(6,2));
-
-        // Az 1. sorban egy kor címke és egy spinner lesz
-        settingPanel.add(new JLabel(Labels.student_eha));
-        settingPanel.add(this.ehaTextfield);
         
         // A 2. sorban egy név címke és egy szövegmezõ lesz
         settingPanel.add(new JLabel(Labels.student_name));
         settingPanel.add(this.nameTextfield);
+        
+     // Az 1. sorban egy kor címke és egy spinner lesz
+        settingPanel.add(new JLabel(Labels.student_room));
+        settingPanel.add(this.roomTextfield);
 
         // A 3. sorban egy kor címke és egy spinner lesz
         settingPanel.add(new JLabel(Labels.student_point));
@@ -159,12 +160,23 @@ public class StudentEditPanel extends JPanel implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (roomTextfield.getText().isEmpty()) {
+                // Ha nem adtak meg nevet, akkor egy hibaüzenetet írunk ki egy
+                // error dialogra (JOptionPane.ERROR_MESSAGE)
+                JOptionPane.showMessageDialog(
+                        gui.getWindow(),
+                        Labels.student_room_is_required,
+                        Labels.error,
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             // létrehozzuk a customert
             Student student = new Student();
             
-            student.setEha(ehaTextfield.getText());
-            student.setName(nameTextfield.getText());
+            
+            student.setName(nameTextfield.getText().toUpperCase());
+            student.setRoom(Integer.parseInt(roomTextfield.getText()));
             student.setPoint((Integer)pointSpinner.getValue());
             student.setKb(kbCheck.isSelected());
             student.setAdmin(adminCheck.isSelected());
@@ -180,13 +192,14 @@ public class StudentEditPanel extends JPanel implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 // Ha az addCustomer true-t ad vissza akkor bezárjuk a dialógust
+            	 System.out.println(student.getName() + " hallgató sikeresen hozzáadva");
                 //setVisible(false);
             	//StudentPane.table.repaint();
             }
         } else if (refreshButton == e.getSource()) {
         	System.out.println("click on refreshButton");
-        	ehaTextfield.setText("");
         	nameTextfield.setText("");
+        	roomTextfield.setText("");
         	pointSpinner.setValue(0);
         	kbCheck.setSelected(false);
         	adminCheck.setSelected(false);

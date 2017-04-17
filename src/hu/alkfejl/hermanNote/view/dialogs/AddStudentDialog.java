@@ -153,7 +153,7 @@ public class AddStudentDialog extends JDialog implements ActionListener {
             // létrehozzuk a customert
             Student student = new Student();
             
-            student.setEha(ehaTextfield.getText());
+           // student.setId(ehaTextfield.getText());
             student.setName(nameTextfield.getText());
             student.setPoint((Integer)pointSpinner.getValue());
             student.setKb(kbCheck.isSelected());

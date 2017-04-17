@@ -30,7 +30,6 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
 
     // A dialógus azon vezérlõit melyekre szükség lesz az eseménykezelés során
     // osztályváltozóként definiáljuk
-    private JTextField ehaTextfield = new JTextField(10);
     private JTextField nameTextfield = new JTextField(10);
     private JTextField roomTextfield = new JTextField(3);
     private JCheckBox kbCheck = new JCheckBox();
@@ -65,15 +64,12 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     private JPanel createSettingPanel() {
         JPanel settingPanel = new JPanel();
 
-        ButtonGroup group = new ButtonGroup();
+        //ButtonGroup group = new ButtonGroup();
         
         // A panel elrendezése mátrix, 5 sor és 2 oszlop, a cellák egyforma méretûek
         settingPanel.setLayout(new GridLayout(6,2));
 
-        // Az 1. sorban egy kor címke és egy spinner lesz
-        settingPanel.add(new JLabel(Labels.student_eha));
-        settingPanel.add(this.ehaTextfield);
-        
+               
         // A 2. sorban egy név címke és egy szövegmezõ lesz
         settingPanel.add(new JLabel(Labels.student_name));
         settingPanel.add(this.nameTextfield);
@@ -160,7 +156,6 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (refreshButton == e.getSource()) {
         	System.out.println("click on refreshButton");
-        	ehaTextfield.setText("");
         	nameTextfield.setText("");
         	roomTextfield.setText("");
         	kbCheck.setSelected(false);
@@ -168,14 +163,6 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         	userCheck.setSelected(false);
         }
     }
-
-	public JTextField getEhaTextfield() {
-		return ehaTextfield;
-	}
-
-	public void setEhaTextfield(JTextField ehaTextfield) {
-		this.ehaTextfield = ehaTextfield;
-	}
 
 	public JTextField getNameTextfield() {
 		return nameTextfield;

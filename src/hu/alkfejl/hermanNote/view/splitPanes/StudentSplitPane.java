@@ -3,6 +3,8 @@ package hu.alkfejl.hermanNote.view.splitPanes;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -106,7 +108,6 @@ public class StudentSplitPane extends JPanel implements ActionListener {
     	
     	super();
         gui = gui2;
-        
     	StudentTablePanel tp = new StudentTablePanel(gui, student);
         selectPane = new JScrollPane(tp);
 
@@ -156,17 +157,19 @@ public class StudentSplitPane extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (sp.getSearchButton() == e.getSource()) {
 			System.out.println("click on refreshButton2");
-			
 			Student student = new Student();
 	            
-            student.setEha(sp.getEhaTextfield().getText());
-            student.setName(sp.getNameTextfield().getText());
+            //student.setId(sp.getEhaTextfield().getText());
+            student.setName(sp.getNameTextfield().getText().toUpperCase());
             student.setRoom(Integer.parseInt(
             		sp.getRoomTextfield().getText().equals("") ? 
             				"0" : sp.getRoomTextfield().getText()));
+            
             student.setKb(sp.getKbCheck().isSelected());
             student.setAdmin(sp.getAdminCheck().isSelected());
             student.setUser(sp.getUserCheck().isSelected());
+            student.toString();
+            
             
             StudentSplitPane sp = new StudentSplitPane(gui, student);
 	            
