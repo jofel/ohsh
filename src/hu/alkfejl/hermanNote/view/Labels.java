@@ -71,6 +71,8 @@ public class Labels {
 	public final static String student_room_is_required= "A 'Szoba' mezõt ki kell tölteni";
     public final static String student_exists = "Hallgató felvétele sikertelen";
     public final static String student_edit_exists = "Hallgató módosítása sikertelen";
+    public static final Object student_remove_success = "Hallgató törlése sikeres";
+    public static final Object student_remove_fail = "Hallgató törlése sikertelen";
 
     // Book labels
     public final static String book = "Book";
@@ -103,6 +105,8 @@ public class Labels {
     public final static String purchase_failed =
             "Nem sikerült rögzíteni a vásárlást!";
 	public final static String student_id = "ID";
+	
+	
 	
 
 	

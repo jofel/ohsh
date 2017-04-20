@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -19,6 +20,7 @@ import javax.swing.table.TableColumn;
 
 import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.HermanNoteGUI;
+import hu.alkfejl.hermanNote.view.Labels;
 import hu.alkfejl.hermanNote.view.splitPanes.StudentSplitPane;
 import hu.alkfejl.hermanNote.view.tablemodels.StudentTableModel;
 
@@ -156,7 +158,32 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (deleteButton == e.getSource()){
+			
 			System.out.println("click on deleteButton");
+			String tableId =  table.getValueAt(table.getSelectedRow(), 0).toString();
+			for (Student student : students){
+				String id = student.getId() + "";
+				if (tableId.equals(id)){
+					
+					if (!gui.getController().removeStudent(student)) {
+		                // Ha az addCustomer false-t ad vissza akkor egy hibaüzenetet
+		                // írunk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
+		                JOptionPane.showMessageDialog(
+		                        gui.getWindow(),
+		                        Labels.student_remove_fail,
+		                        Labels.error,
+		                        JOptionPane.ERROR_MESSAGE);
+		            } else {
+		            	JOptionPane.showMessageDialog(
+		                        gui.getWindow(),
+		                        Labels.student_remove_success,
+		                        Labels.error,
+		                        JOptionPane.INFORMATION_MESSAGE);
+		            	StudentSplitPane sp = new StudentSplitPane(gui, student, student);
+		            	
+		            }
+				}
+			}
 		}
 		if (editButton == e.getSource()){
 			System.out.println("click on editButton");

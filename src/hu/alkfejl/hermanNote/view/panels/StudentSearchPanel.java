@@ -54,8 +54,11 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         // A gombokat tartalmazó panel gyártása
         JPanel buttonPanel = createButtonPanel();
 
+        
+        JPanel titlePanel = createTitlePanel();
+        
         // Az elõzõ két panelt egy panelre rakjuk
-        JPanel MainPanel = createPanel(settingPanel, buttonPanel); 
+        JPanel MainPanel = createPanel(titlePanel, settingPanel, buttonPanel); 
         
         add(MainPanel);
         
@@ -63,6 +66,10 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         setVisible(true);
     }
 
+    private JPanel createTitlePanel(){
+		return null;
+    	
+    }
     private JPanel createSettingPanel() {
         JPanel settingPanel = new JPanel();
 
@@ -140,12 +147,15 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         return buttonPanel;
     }
 
-    private JPanel createPanel(JPanel settingPanel, JPanel buttonPanel) {
+    private JPanel createPanel(JPanel titlePanel, JPanel settingPanel, JPanel buttonPanel) {
         JPanel dialogPanel = new JPanel();
-
+        	
         // A panel elrendezése BorderLayout
         dialogPanel.setLayout(new BorderLayout());
 
+        
+        dialogPanel.add(titlePanel, BorderLayout.NORTH);
+        
         // Középen lesz a settingPanel
         dialogPanel.add(settingPanel, BorderLayout.CENTER);
 

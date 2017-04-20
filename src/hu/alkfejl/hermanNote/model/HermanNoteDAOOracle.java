@@ -367,6 +367,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
                 student.setKb(rs.getInt("kb")==1?true:false);
                 student.setUser(rs.getInt("felhasznalo")==1?true:false);
                 student.setAdmin(rs.getInt("admin")==1?true:false);
+                student.setPassword(rs.getString("jelszo"));
                 
                 students.add(student);
                 System.out.println( rs + ".Student ");
