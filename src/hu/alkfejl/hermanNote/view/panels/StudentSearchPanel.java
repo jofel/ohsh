@@ -156,7 +156,7 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         // A panel elrendezése BorderLayout
         dialogPanel.setLayout(new BorderLayout());
 
-        
+        //új panel
         dialogPanel.add(titlePanel, BorderLayout.NORTH);
         
         // Középen lesz a settingPanel
