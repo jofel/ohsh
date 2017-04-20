@@ -21,7 +21,7 @@ import hu.alkfejl.hermanNote.view.Labels;
 import hu.alkfejl.hermanNote.view.splitPanes.StudentSplitPane;
 
 /**
- * Az oszt·ly az ˙j ¸gyfÈl felvÈtelÈnÈl megjelenı dialÛgus.
+ * Az oszt√°ly az √∫j √ºgyf√©l felv√©tel√©n√©l megjelen≈ë dial√≥gus.
  */
 public class StudentSearchPanel extends JPanel implements ActionListener {
 
@@ -30,8 +30,8 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
 
 	private HermanNoteGUI gui;
 
-    // A dialÛgus azon vezÈrlıit melyekre sz¸ksÈg lesz az esemÈnykezelÈs sor·n
-    // oszt·lyv·ltozÛkÈnt defini·ljuk
+    // A dial√≥gus azon vez√©rl≈ëit melyekre sz√ºks√©g lesz az esem√©nykezel√©s sor√°n
+    // oszt√°lyv√°ltoz√≥k√©nt defini√°ljuk
     private JTextField nameTextfield = new JTextField(10);
     private JTextField roomTextfield = new JTextField(3);
     private JCheckBox kbCheck = new JCheckBox();
@@ -48,27 +48,29 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     public StudentSearchPanel(HermanNoteGUI gui) {
     	this.gui=gui;
     	
-    	 // A be·llÌt·sokat tartalmazÛ panel gy·rt·sa
+    	 // A be√°ll√≠t√°sokat tartalmaz√≥ panel gy√°rt√°sa
         JPanel settingPanel = createSettingPanel();
 
-        // A gombokat tartalmazÛ panel gy·rt·sa
+        // A gombokat tartalmaz√≥ panel gy√°rt√°sa
         JPanel buttonPanel = createButtonPanel();
-
         
         JPanel titlePanel = createTitlePanel();
         
-        // Az elızı kÈt panelt egy panelre rakjuk
+        // Az el≈ëz≈ë k√©t panelt egy panelre rakjuk
         JPanel MainPanel = createPanel(titlePanel, settingPanel, buttonPanel); 
         
         add(MainPanel);
         
-        // Dialogus megjelenÌtÈse
+        // Dialogus megjelen√≠t√©se
         setVisible(true);
     }
 
     private JPanel createTitlePanel(){
-    	JPanel title = new JPanel();
-		return title;
+    	JPanel settingPanel = new JPanel();
+    	
+    	settingPanel.add(new JLabel("Keres√©s"));
+    	
+    	return settingPanel;
     	
     }
     private JPanel createSettingPanel() {
@@ -76,27 +78,27 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
 
         //ButtonGroup group = new ButtonGroup();
         
-        // A panel elrendezÈse m·trix, 5 sor Ès 2 oszlop, a cell·k egyforma mÈret˚ek
+        // A panel elrendez√©se m√°trix, 5 sor √©s 2 oszlop, a cell√°k egyforma m√©ret≈±ek
         settingPanel.setLayout(new GridLayout(6,2));
 
                
-        // A 2. sorban egy nÈv cÌmke Ès egy szˆvegmezı lesz
+        // A 2. sorban egy n√©v c√≠mke √©s egy sz√∂vegmez≈ë lesz
         settingPanel.add(new JLabel(Labels.student_name));
         settingPanel.add(this.nameTextfield);
 
-        // A 3. sorban egy kor cÌmke Ès egy spinner lesz
+        // A 3. sorban egy kor c√≠mke √©s egy spinner lesz
         settingPanel.add(new JLabel(Labels.student_room));
         settingPanel.add(this.roomTextfield);
 
-        // A 4. sorban lesz a kedvezmÈnyezettsÈg
+        // A 4. sorban lesz a kedvezm√©nyezetts√©g
         settingPanel.add(new JLabel(Labels.student_kb));
         settingPanel.add(kbCheck);
 
-        // A 5. sorban lesz a vÈgzettsÈg
+        // A 5. sorban lesz a v√©gzetts√©g
         settingPanel.add(new JLabel(Labels.student_admin));
         settingPanel.add(adminCheck);
         
-     	// A 6. sorban lesz a vÈgzettsÈg
+     	// A 6. sorban lesz a v√©gzetts√©g
         settingPanel.add(new JLabel(Labels.student_user));
         settingPanel.add(userCheck);
 
@@ -106,10 +108,10 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
         
-        // A panel elrendezÈse folytonos, kˆzÈpre igazÌtva
+        // A panel elrendez√©se folytonos, k√∂z√©pre igaz√≠tva
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        // Hozz·adjuk az ok gombot, Ès figyel¸nk r·
+        // Hozz√°adjuk az ok gombot, √©s figyel√ºnk r√°
         ImageIcon searchIcon = new ImageIcon("src/img/search.png");
         ImageIcon searchTextIcon = new ImageIcon("src/img/searchText.png");
         
@@ -128,7 +130,7 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         });
         buttonPanel.add(searchButton);
 
-        // Hozz·adjuk a refresh gombot, Ès figyel¸nk r·
+        // Hozz√°adjuk a refresh gombot, √©s figyel√ºnk r√°
         ImageIcon refreshIcon = new ImageIcon("src/img/refresh.png");
         ImageIcon refreshTextIcon = new ImageIcon("src/img/refreshText.png");
         refreshButton = new JButton();
@@ -151,13 +153,13 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     private JPanel createPanel(JPanel titlePanel, JPanel settingPanel, JPanel buttonPanel) {
         JPanel dialogPanel = new JPanel();
         	
-        // A panel elrendezÈse BorderLayout
+        // A panel elrendez√©se BorderLayout
         dialogPanel.setLayout(new BorderLayout());
 
         
         dialogPanel.add(titlePanel, BorderLayout.NORTH);
         
-        // KˆzÈpen lesz a settingPanel
+        // K√∂z√©pen lesz a settingPanel
         dialogPanel.add(settingPanel, BorderLayout.CENTER);
 
         // Alul pedig a gombok
