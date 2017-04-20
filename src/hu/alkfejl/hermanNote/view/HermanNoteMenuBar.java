@@ -57,17 +57,21 @@ public class HermanNoteMenuBar extends JMenuBar implements ActionListener {
         this.add(menu);
 
         // Az egyes menu itemeket a maradék paraméter értékeivel hozzuk létre
-        for (String subname : subnames) {
-            JMenuItem menuItem = new JMenuItem(subname);
-
-            menu.add(menuItem);
-
-            // Minden egyes menu itemet figyelünk
-            // A menu itemek esetén a megfigyelést az ActionListener interfész
-            // biztosítja, ezért a menubar implementálja ezt az interfészt és
-            // felülírja az actionPerformed metódust
-            menuItem.addActionListener(this);
-        }
+//        for (String subname : subnames) {
+//            JMenuItem menuItem = new JMenuItem(subname);
+//
+//            menu.add(menuItem);
+//
+//            // Minden egyes menu itemet figyelünk
+//            // A menu itemek esetén a megfigyelést az ActionListener interfész
+//            // biztosítja, ezért a menubar implementálja ezt az interfészt és
+//            // felülírja az actionPerformed metódust
+//            menuItem.addActionListener(this);
+//        }
+        JMenuItem menuItem = new JMenuItem("Hallgató");
+        menu.add(menuItem);
+        menuItem.addActionListener(this);
+        
     }
 
     /*

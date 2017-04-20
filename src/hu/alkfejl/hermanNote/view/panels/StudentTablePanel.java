@@ -179,7 +179,7 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 		                        Labels.student_remove_success,
 		                        Labels.error,
 		                        JOptionPane.INFORMATION_MESSAGE);
-		            	StudentSplitPane sp = new StudentSplitPane(gui, student, student);
+		            	StudentSplitPane sp = new StudentSplitPane(gui);
 		            	
 		            }
 				}

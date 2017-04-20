@@ -33,7 +33,7 @@ public class Labels {
     public final static String students = "Hallgatók";
     public final static String add_student = "Hallgató hozzáadása";
     public final static String list_students = "Hallgatók listája";
-    public final static String students_pane = "Hallgatók...";
+    public final static String students_pane = "Hallgató";
     public final static String student_eha = "EHA";
     public final static String student_name = "Név";
     public final static String student_point = "Pontok";

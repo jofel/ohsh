@@ -67,7 +67,8 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
     }
 
     private JPanel createTitlePanel(){
-		return null;
+    	JPanel title = new JPanel();
+		return title;
     	
     }
     private JPanel createSettingPanel() {
