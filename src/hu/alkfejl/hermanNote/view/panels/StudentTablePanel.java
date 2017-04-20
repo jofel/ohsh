@@ -40,33 +40,46 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 		this.gui=gui;
 		
 		
-        // A gombokat tartalmazÛ panel gy·rt·sa
+        // A gombokat tartalmaz√≥ panel gy√°rt√°sa
         JPanel buttonPanel = createButtonPanel();
+        
+        JPanel titlePanel = createTitlePanel(); 
 
-        // Az elızı kÈt panelt egy panelre rakjuk
-        JPanel MainPanel = createPanel(createTable(), buttonPanel); 
+        // Az el≈ëz≈ë k√©t panelt egy panelre rakjuk
+        JPanel MainPanel = createPanel(createTitlePanel(), createTable(), buttonPanel); 
         
         add(MainPanel);
         
         setBackground(settingsColor);
-        // Dialogus megjelenÌtÈse
+        // Dialogus megjelen√≠t√©se
         setVisible(true);
     }
+	
+	private JPanel createTitlePanel(){
+    	JPanel settingPanel = new JPanel();
+    	
+    	settingPanel.add(new JLabel("Keres√©si tal√°latok, szerkeszt√©s"));
+    	
+    	return settingPanel;
+    	
+    }
+	
 	
 	public StudentTablePanel(HermanNoteGUI gui, Student student) {
 		this.gui=gui;
 		
+		JPanel titlePanel = createTitlePanel();
 		
-        // A gombokat tartalmazÛ panel gy·rt·sa
+        // A gombokat tartalmaz√≥ panel gy√°rt√°sa
         JPanel buttonPanel = createButtonPanel();
 
-        // Az elızı kÈt panelt egy panelre rakjuk
-        JPanel MainPanel = createPanel(createTable(student), buttonPanel); 
+        // Az el≈ëz≈ë k√©t panelt egy panelre rakjuk
+        JPanel MainPanel = createPanel(createTitlePanel(), createTable(student), buttonPanel); 
         
         add(MainPanel);
         
         setBackground(settingsColor);
-        // Dialogus megjelenÌtÈse
+        // Dialogus megjelen√≠t√©se
         setVisible(true);
     }
 	
@@ -109,10 +122,10 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 	private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
 
-        // A panel elrendezÈse folytonos, kˆzÈpre igazÌtva
+        // A panel elrendez√©se folytonos, k√∂z√©pre igaz√≠tva
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        // Hozz·adjuk az edit gombot, Ès figyel¸nk r·  
+        // Hozz√°adjuk az edit gombot, √©s figyel√ºnk r√°  
         ImageIcon editIcon = new ImageIcon("src/img/edit.png");
         editButton = new JButton();
         editButton.setBackground(settingsColor);
@@ -120,7 +133,7 @@ public class StudentTablePanel extends JPanel implements ActionListener {
         editButton.addActionListener(this);
         buttonPanel.add(editButton);
 
-        // Hozz·adjuk a cancel gombot, Ès figyel¸nk r·
+        // Hozz√°adjuk a cancel gombot, √©s figyel√ºnk r√°
         ImageIcon deleteIcon = new ImageIcon("src/img/delete.png");
         deleteButton = new JButton();
         deleteButton.setBackground(settingsColor);
@@ -133,20 +146,21 @@ public class StudentTablePanel extends JPanel implements ActionListener {
         return buttonPanel;
     }
 
-    private JPanel createPanel(JTable table, JPanel buttonPanel) {
+    private JPanel createPanel(JPanel titlePanel, JTable table, JPanel buttonPanel) {
         JPanel dialogPanel = new JPanel();
 
-        // A panel elrendezÈse BorderLayout
+        // A panel elrendez√©se BorderLayout
         dialogPanel.setLayout(new BorderLayout());
-
         
-        // KˆzÈpen lesz a settingPanel
-        dialogPanel.add(table, BorderLayout.CENTER);
+        dialogPanel.add(titlePanel, BorderLayout.NORTH);
+        
+        // K√∂z√©pen lesz a settingPanel
+        dialogPanel.add(table, BorderLayout.SOUTH);
 
         // Alul pedig a gombok
         buttonPanel.setPreferredSize(new Dimension(230, 100));
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
-        dialogPanel.add(buttonPanel, BorderLayout.NORTH);
+        dialogPanel.add(buttonPanel, BorderLayout.CENTER);
 
         //dialogPanel.setPreferredSize(new Dimension(240, 200));
         //dialogPanel.setMaximumSize(dialogPanel.getPreferredSize());
@@ -166,8 +180,8 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 				if (tableId.equals(id)){
 					
 					if (!gui.getController().removeStudent(student)) {
-		                // Ha az addCustomer false-t ad vissza akkor egy hiba¸zenetet
-		                // Ìrunk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
+		                // Ha az addCustomer false-t ad vissza akkor egy hiba√ºzenetet
+		                // √≠runk ki egy error dialogra(JOptionPane.ERROR_MESSAGE)
 		                JOptionPane.showMessageDialog(
 		                        gui.getWindow(),
 		                        Labels.student_remove_fail,
@@ -179,7 +193,7 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 		                        Labels.student_remove_success,
 		                        Labels.error,
 		                        JOptionPane.INFORMATION_MESSAGE);
-		            	StudentSplitPane sp = new StudentSplitPane(gui);
+		            	StudentSplitPane sp = new StudentSplitPane(gui, student, student);
 		            	
 		            }
 				}
