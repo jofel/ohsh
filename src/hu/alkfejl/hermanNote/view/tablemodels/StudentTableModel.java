@@ -18,7 +18,7 @@ public class StudentTableModel extends AbstractTableModel {
 
     // Az egyes oszlop fejlécek nevei
     private String[] columnNames = new String[] {
-            Labels.student_id, Labels.student_name
+    		 Labels.student_id, Labels.student_name, Labels.student_room
            // , Labels.student_point, Labels.student_kb, Labels.student_admin, Labels.student_user
             };
 
@@ -27,7 +27,6 @@ public class StudentTableModel extends AbstractTableModel {
 
     public StudentTableModel(List<Student> student) {
     	super();
-    	System.out.println("StudentTableModel " + student.size());
         prepareDataStructure(student);
 	}
     /**
@@ -42,7 +41,6 @@ public class StudentTableModel extends AbstractTableModel {
      */
 	private void prepareDataStructure(List<Student> students) {
 		int row = 0;
-		System.out.println("prepareDataStructure " + students.size());
         for (Student student : students) {
             this.students.put(row, student);
             row++;
@@ -92,6 +90,8 @@ public class StudentTableModel extends AbstractTableModel {
             return student.getName();
         } else if (askedColumnName.equals(Labels.student_point)) {
             return student.getPoint();
+        } else if (askedColumnName.equals(Labels.student_room)) {
+            return student.getRoom();
         } else if (askedColumnName.equals(Labels.student_kb)) {
         	//System.out.println("Student kollbizes?"+ student.isKb());
             return student.isKb();

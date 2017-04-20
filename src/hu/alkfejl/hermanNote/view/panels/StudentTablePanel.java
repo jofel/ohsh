@@ -1,31 +1,25 @@
 package hu.alkfejl.hermanNote.view.panels;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumn;
 
 import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.HermanNoteGUI;
-import hu.alkfejl.hermanNote.view.Labels;
+import hu.alkfejl.hermanNote.view.splitPanes.StudentSplitPane;
 import hu.alkfejl.hermanNote.view.tablemodels.StudentTableModel;
 
 public class StudentTablePanel extends JPanel implements ActionListener {
@@ -34,6 +28,8 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 	private JLabel editLabel;
 	private JButton editButton;
 	private JButton deleteButton;
+	private JTable table;
+	List<Student> students;
 	Color settingsColor = new Color(224, 224, 224);
 	private HermanNoteGUI gui;
 	
@@ -75,7 +71,7 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 	private JTable createTable() {
 			
 	        List<Student> students = gui.getController().getStudents();
-	        
+	        System.out.println(students.get(0).getRoom());
 	        JTable table = new JTable(new StudentTableModel(students));
 	        //table.setBackground(Color.lightGray);	        
 	        return table;
@@ -83,9 +79,27 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 
 	private JTable createTable(Student student) {
         
-        List<Student> students = gui.getController().searchStudent(student);
-        System.out.println("createTable " + students.size());
-        JTable table = new JTable(new StudentTableModel(students));
+        students = gui.getController().searchStudent(student);
+        table = new JTable(new StudentTableModel(students));
+        
+        TableColumn column = null;
+        for (int i = 0; i < 3; i++) {
+            column = table.getColumnModel().getColumn(i);
+            if (i == 1) {
+                column.setPreferredWidth(150); //sport column is bigger
+            } else {
+                column.setPreferredWidth(10);
+            }
+        }
+        
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+            }
+        });
+        
         //table.setBackground(Color.lightGray);	        
         return table;
     }
@@ -146,6 +160,19 @@ public class StudentTablePanel extends JPanel implements ActionListener {
 		}
 		if (editButton == e.getSource()){
 			System.out.println("click on editButton");
+			String tableId =  table.getValueAt(table.getSelectedRow(), 0).toString();
+			for (Student student : students){
+				String id = student.getId() + "";
+				System.out.println(tableId + "==" + id);
+				if (tableId.equals(id)){
+					System.out.println(tableId + "==" + id);
+					StudentSplitPane sp = new StudentSplitPane(gui, student, student);
+				}
+			}
+			for(int i=0; i<3; i++){
+			System.out.print(table.getValueAt(table.getSelectedRow(), i)+"  ");
+			}
+			
 		}
 		
 	}

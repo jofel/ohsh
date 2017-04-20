@@ -35,12 +35,15 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 	}
 	private static final String SQL_ADD_STUDENT =
 	        "INSERT INTO hallgato " +
-	        "(nev, pont, kb, admin, felhasznalo)" +
-	        "VALUES (UPPER(?), ?, ?, ?, ?)";
+	        "(nev, szoba, pont, kb, felhasznalo, admin)" +
+	        "VALUES (UPPER(?),?, ?, ?, ?, ?)";
 	
-	private static final String SQL_LIST_STUDENTS = "SELECT * FROM hallgato";
+	private static final String SQL_LIST_STUDENTS = "SELECT nev, szoba, pont, kb, felhasznalo, admin FROM hallgato";
 
-	private static final String SQL_ADD_STUDENT_ROOM = "INSERT INTO szoba (id, szobaszam) VALUES ((SELECT MAX(id) FROM hallgato), ?)";
+	private static final String SQL_EDIT_STUDENT = "update hallgato set nev = '?' where id = ?";
+
+	private static final String SQL_REMOVE_STUDENT = "DELETE FROM hallgato WHERE id=?";
+	//UPDATE hallgato INNER JOIN szoba ON hallgato.id=szoba.id SET nev = ?, pont = ?, kb = ?, admin = ?, felhasznalo = ?, szobaszam = ? WHERE hallgato.id = ?";
 	
 	private static String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato";
 	
@@ -48,8 +51,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		boolean rvSucceeded = false;
 		
 		Connection conn = null;
-        PreparedStatement pst1 = null;
-        PreparedStatement pst2 = null;
+        PreparedStatement pst = null;
         
 		if (!checkUserIdUnique(student)) {
             return false;
@@ -66,41 +68,26 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 			
 			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
             // paraméterezhetõ) utasítást
-			pst1 = conn.prepareStatement(SQL_ADD_STUDENT);
+			pst = conn.prepareStatement(SQL_ADD_STUDENT);
 			
 			// Az egyes parametéreket sorban kell megadni, pozíció alapján, ami
             // 1-tõl indul
             // Célszerû egy indexet inkrementálni, mivel ha az egyik paraméter
             // kiesik, akkor nem kell az utána következõeket újra számozni...
             int index = 1;
-            //pst.setString(index++, student.getEha());
-            pst1.setString(index++, student.getName());
-            pst1.setInt(index++, student.getPoint());
-            pst1.setInt(index++, student.isKb() ? 1 : 0);
-            //System.out.println("Student kollbizes?"+ student.isKb());
-            pst1.setInt(index++, student.isAdmin() ? 1 : 0);
-            pst1.setInt(index++, student.isUser() ? 1 : 0);
+            pst.setString(index++, student.getName());
+            pst.setInt(index++, student.getRoom());
+            pst.setInt(index++, student.getPoint());
+            pst.setInt(index++, student.isKb() ? 1 : 0);
+            pst.setInt(index++, student.isUser() ? 1 : 0);
+            pst.setInt(index++, student.isAdmin() ? 1 : 0);
             
-            int rowsAffected1 = pst1.executeUpdate();
-            System.out.println("rowsAffected1: "+ rowsAffected1);
+            int rowsAffected = pst.executeUpdate();
+            System.out.println("rowsAffected1: "+ rowsAffected);
             
-            index = 1;
-            pst2 = conn.prepareStatement(SQL_ADD_STUDENT_ROOM);
-            pst2.setInt(index++, student.getRoom());
-            
-            
-            
-            
-            
-            
-            // Az ExecuteUpdate paranccsal végrehajtjuk az utasítást
-            // Az executeUpdate visszaadja, hogy hány sort érintett az SQL ha 
-            // DML-t hajtunk végre (DDL esetén 0-t ad vissza)
-            int rowsAffected2 = pst2.executeUpdate();
-            
-			
+            			
          // csak akkor sikeres, ha valóban volt érintett sor
-            if (rowsAffected1 == 1 && rowsAffected2==1) {
+            if (rowsAffected == 1) {
                 rvSucceeded = true;
             }
         } catch (SQLException e) {
@@ -116,10 +103,81 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
             // Minden egyes objektumot külön try-catch ágban kell megpróbálni
             // bezárni!
             try {
-                if (pst1 != null) {
-                    pst1.close();
-                } else if (pst2 != null){
-                	pst2.close();
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to close statement when adding user.");
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to close connection when adding user.");
+                e.printStackTrace();
+            }
+        }
+
+		// eltároljuk memóriába
+		//boolean isStored = users.add(user);
+		//System.out.println("Memóriába mentve az új felhasználó.");
+		
+		return rvSucceeded;
+	}
+	
+	public boolean removeStudent(Student student) {
+		boolean rvSucceeded = false;
+		
+		Connection conn = null;
+        PreparedStatement pst = null;
+        
+			
+		try {
+			//////////////////////////////////
+			// Az adatbázis kapcsolatunkat a OracleDataSource segítségével hozzuk létre
+            OracleDataSource ods = new OracleDataSource();
+	  		ods.setURL("jdbc:oracle:thin:@localhost:1521:xe");
+	  		
+	  		// Megadjuk, hogy a ODBC milyen driveren keresztul milyen fájlt keressen
+			conn = ods.getConnection("SYSTEM","SYS");
+			
+			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
+            // paraméterezhetõ) utasítást
+			pst = conn.prepareStatement(SQL_REMOVE_STUDENT);
+			
+			// Az egyes parametéreket sorban kell megadni, pozíció alapján, ami
+            // 1-tõl indul
+            // Célszerû egy indexet inkrementálni, mivel ha az egyik paraméter
+            // kiesik, akkor nem kell az utána következõeket újra számozni...
+            int index = 1;
+            pst.setInt(index++, student.getId());
+            
+            int rowsAffected = pst.executeUpdate();
+            System.out.println("rowsAffected1: "+ rowsAffected);
+            
+            			
+         // csak akkor sikeres, ha valóban volt érintett sor
+            if (rowsAffected == 1) {
+                rvSucceeded = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to execute adding user.");
+            e.printStackTrace();
+        } finally {
+            // NAGYON FONTOS!
+            // Minden adatbázis objektumot le kell zárni, mivel ha ezt nem
+            // tesszük meg, akkor elõfordulhat, hogy nyitott kapcsolatok
+            // maradnak az adatbázis felé. Az adatbázis pedig korlátozott
+            // számban tart fenn kapcsolatokat, ezért egy idõ után akar ez be is
+            // telhet!
+            // Minden egyes objektumot külön try-catch ágban kell megpróbálni
+            // bezárni!
+            try {
+                if (pst != null) {
+                    pst.close();
                 }
             } catch (SQLException e) {
                 System.out.println("Failed to close statement when adding user.");
@@ -240,7 +298,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
             // paraméterezhetõ) utasítást
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato, szoba ";
+			String SQL_SEARCH_STUDENTS = "SELECT * FROM hallgato ";
 			//System.out.println(s.getEha());
 			System.out.println(s.getName());
 			boolean sqlBegin = true;
@@ -250,7 +308,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 //			} 
 			if (!s.getName().equals("")){
 				
-				SQL_SEARCH_STUDENTS += "WHERE hallgato.id = szoba.id AND REGEXP_LIKE(nev, '^" + s.getName() + "(*)')";
+				SQL_SEARCH_STUDENTS += "WHERE REGEXP_LIKE(nev, '^" + s.getName() + "(*)')";
 				sqlBegin = false;
 			} 
 			if (s.getRoom()!=0){
@@ -261,7 +319,7 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 					sqlBegin = false;
 				}
 				//regex pl: ^9(*) -> az összes 9-el kezdõdõ szobát adja.
-				SQL_SEARCH_STUDENTS += "hallgato.id = szoba.id AND REGEXP_LIKE (szobaszam, '^" + s.getRoom() + "(*)')";
+				SQL_SEARCH_STUDENTS += "REGEXP_LIKE (szoba, '^" + s.getRoom() + "(*)')";
 			} 
 			if (s.isKb() == true){
 				if (sqlBegin == false){
@@ -294,8 +352,6 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
             // Az eredményeket egy ResultSet objektumban kapjuk vissza
 			System.out.println( SQL_SEARCH_STUDENTS );
 			ResultSet rs = st.executeQuery( SQL_SEARCH_STUDENTS );
-			System.out.println( "RS? ");
-			System.out.println( "RS " + rs );
 			
 			// Bejárjuk a visszakapott ResultSet-et (ami a usereket tartalmazza)
 			while (rs.next()) {
@@ -306,10 +362,11 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 				
                 student.setId(rs.getInt("id"));
                 student.setName(rs.getString("nev"));
+                student.setRoom(Integer.parseInt(rs.getString("szoba")));
                 student.setPoint(Integer.parseInt(rs.getString("pont")));
                 student.setKb(rs.getInt("kb")==1?true:false);
-                student.setAdmin(rs.getInt("admin")==1?true:false);
                 student.setUser(rs.getInt("felhasznalo")==1?true:false);
+                student.setAdmin(rs.getInt("admin")==1?true:false);
                 
                 students.add(student);
                 System.out.println( rs + ".Student ");
@@ -342,11 +399,74 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 	}
 	
 	@Override
-	public boolean removeStudent(Student s) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean editStudent(Student student) {
+		boolean rvSucceeded = false;
+		System.out.println("editStudent");
+		Connection conn = null;
+        PreparedStatement pst = null;
+        
+			
+		try {
+			//////////////////////////////////
+			// Az adatbázis kapcsolatunkat a OracleDataSource segítségével hozzuk létre
+            OracleDataSource ods = new OracleDataSource();
+	  		ods.setURL("jdbc:oracle:thin:@localhost:1521:xe");
+	  		
+	  		// Megadjuk, hogy a ODBC milyen driveren keresztul milyen fájlt keressen
+			conn = ods.getConnection("SYSTEM","SYS");
+			
+			// A kapcsolat (conn) objektumtól kérünk egy egyszerû (nem
+            // paraméterezhetõ) utasítást
+			pst = conn.prepareStatement(SQL_EDIT_STUDENT);
+			
+			// Az egyes parametéreket sorban kell megadni, pozíció alapján, ami
+            // 1-tõl indul
+            // Célszerû egy indexet inkrementálni, mivel ha az egyik paraméter
+            // kiesik, akkor nem kell az utána következõeket újra számozni...
+            int index = 1;
+            pst.setString(index++, student.getName());
+            String idString = student.getId()+"";
+            pst.setString(index++,idString );
+            
+            //pst.setInt(index++, student.getPoint());
+            //pst.setInt(index++, student.isKb() ? 1 : 0);
+            //pst.setInt(index++, student.isAdmin() ? 1 : 0);
+            //pst.setInt(index++, student.isUser() ? 1 : 0);
+            
+            int rowsAffected = pst.executeUpdate();
+            System.out.println("rowsAffected: "+ rowsAffected);
+            
+            
+         // csak akkor sikeres, ha valóban volt érintett sor
+            if (rowsAffected == 1) {
+                rvSucceeded = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to execute adding user.");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst!= null) {
+                    pst.close();
+                } 
+            } catch (SQLException e) {
+                System.out.println("Failed to close statement when adding user.");
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to close connection when adding user.");
+                e.printStackTrace();
+            }
+        }
+		// eltároljuk memóriába
+		return rvSucceeded;
 	}
 	
+		
 	/**
      * Ellenõrzi a {@link #customers} integritását, a {@link Customer#getName()}
      * egyedi kell legyen.
@@ -402,6 +522,8 @@ public class HermanNoteDAOOracle implements HermanNoteDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 
 }

@@ -62,6 +62,11 @@ public class HermanNoteController {
         return dao.searchStudent(s);
 	}
     
+    public boolean editStudent(Student s) {
+		// TODO Auto-generated method stub
+    	return dao.editStudent(s);
+	}
+    
     public boolean addCustomer(Customer c) {
         // Controller, business logic-ra (üzleti logika, szabályok) példa
         // Szabály: valaki akkor hallgató ha 14-nél fiatalabb, valaki akkor
@@ -100,6 +105,7 @@ public class HermanNoteController {
     public List<Purchase> getPurchases(){
         return dao.getPurchases();
     }
+	
 	
 
 }

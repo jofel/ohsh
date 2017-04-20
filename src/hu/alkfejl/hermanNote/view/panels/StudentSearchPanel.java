@@ -14,9 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import hu.alkfejl.hermanNote.model.bean.Student;
 import hu.alkfejl.hermanNote.view.Colors;
 import hu.alkfejl.hermanNote.view.HermanNoteGUI;
 import hu.alkfejl.hermanNote.view.Labels;
+import hu.alkfejl.hermanNote.view.splitPanes.StudentSplitPane;
 
 /**
  * Az osztály az új ügyfél felvételénél megjelenõ dialógus.
@@ -159,9 +161,27 @@ public class StudentSearchPanel extends JPanel implements ActionListener {
         	nameTextfield.setText("");
         	roomTextfield.setText("");
         	kbCheck.setSelected(false);
-        	adminCheck.setSelected(false);
         	userCheck.setSelected(false);
-        }
+        	adminCheck.setSelected(false);
+        } else if (getSearchButton() == e.getSource()) {
+			System.out.println("click on refreshButton2");
+			Student student = new Student();
+	            
+            //student.setId(sp.getEhaTextfield().getText());
+            student.setName(getNameTextfield().getText().toUpperCase());
+            student.setRoom(Integer.parseInt(
+            		getRoomTextfield().getText().equals("") ? 
+            				"0" : getRoomTextfield().getText()));
+            
+            student.setKb(getKbCheck().isSelected());
+            student.setAdmin(getAdminCheck().isSelected());
+            student.setUser(getUserCheck().isSelected());
+            student.toString();
+            
+            
+            StudentSplitPane sp = new StudentSplitPane(gui, student);
+	            
+	    }
     }
 
 	public JTextField getNameTextfield() {

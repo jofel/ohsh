@@ -82,6 +82,8 @@ public interface HermanNoteDAO {
 
 	public boolean removeStudent(Student s);
 
+	public boolean editStudent(Student s);
+
 	
 
 	

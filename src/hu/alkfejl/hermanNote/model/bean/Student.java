@@ -10,11 +10,12 @@ public class Student {
     
     private int id = 0;
     private String name;
+    private int room = 0;
     private int point = 0;
     private boolean kb;
-    private boolean admin;
     private boolean user;
-    private int room = 0;
+    private boolean admin;
+    private String password = "";
     
     
 	public int getId() {
@@ -59,10 +60,17 @@ public class Student {
 	public void setUser(boolean user) {
 		this.user = user;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", point=" + point + ", kb=" + kb + ", admin=" + admin
-				+ ", felhasznalo=" + user + "]";
+		return "Student [id=" + id +  ", name=" + name + ", room=" + room + ", point=" + point + ", kb=" + kb 
+				+ ", felhasznalo=" + user + ", admin=" + admin + "]";
 	}
     
 
